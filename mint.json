@@ -3,7 +3,7 @@
   "name": "Storter Kit", 
   "logo": {
     "dark": "/logo/docslogo_dark.svg",
-    "light": "/logo/docslogo_processed.svg"
+    "light": "/logo/docslogo_light.svg"
   },
   "favicon": "/wirekitefavicon.svg",
   "colors": {
