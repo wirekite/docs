@@ -20,11 +20,11 @@
   },
   "font": {
    "headings": {
-     "family": "Roboto",
+     "family": "Arial",
      "weight": 500
    },
    "body": {
-     "family": "Oswald",
+     "family": "Arial",
      "weight": 500
    }
   },
