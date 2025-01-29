@@ -34,12 +34,12 @@
     {
       "name": "Community",
       "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "url": "https://wirekite.slack.com/"
     },
     {
       "name": "Blog",
       "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "https://wirekite.webflow.io/blog"
     }
   ],
   "navigation": [
