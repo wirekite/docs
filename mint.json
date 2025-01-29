@@ -2,8 +2,8 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Storter Kit", 
   "logo": {
-    "dark": "/wirekitefavicon.svg",
-    "light": "/logo/wirekiteheading.svg"
+    "dark": "/logo/docslogo_processed.svg",
+    "light": "/logo/docslogo_processed.svg"
   },
   "favicon": "/wirekitefavicon.svg",
   "colors": {
