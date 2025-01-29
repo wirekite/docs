@@ -18,6 +18,16 @@
   "background": {
     "syle": "grid"
   },
+  "font": {
+   "headings": {
+     "family": "Roboto",
+     "weight": 500
+   },
+   "body": {
+     "family": "Oswald",
+     "weight": 500
+   }
+  },
   "topbarLinks": [
     {
       "name": "Email",
