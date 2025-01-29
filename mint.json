@@ -15,6 +15,9 @@
       "to": "#07C983"
     }
   },
+  "background": {
+    "syle": "grid"
+  },
   "topbarLinks": [
     {
       "name": "Email",
