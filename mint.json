@@ -46,36 +46,30 @@
     {
       "group": "Introduction",
       "pages": [
-        "overview",
-        "architecture",
-        "datatypematrix"
+        "introduction/overview",
+        "introduction/architecture",
+        "introduction/implementation"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "Data Types",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "datatypes/mysql",
+        "datatypes/postgres",
+        "datatypes/oracle"
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "Databases",
       "pages": [
-        "api-reference/introduction"
+        "databases/mysql",
+        "databases/postgres",
+        "databases/oracle",
+        "databases/snowflake",
+        "databases/navigation",
+        "databases/reusable-snippets"
       ]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
-      ]
-    }
+    }    
   ],
   "footerSocials": {
     "x": "https://x.com/mintlify",
