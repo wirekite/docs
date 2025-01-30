@@ -44,11 +44,11 @@
   ],
   "navigation": [
     {
-      "group": "Get Storted",
+      "group": "Introduction",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "overview",
+        "architecture",
+        "datatypematrix"
       ]
     },
     {
