@@ -65,9 +65,7 @@
         "databases/mysql",
         "databases/postgres",
         "databases/oracle",
-        "databases/snowflake",
-        "databases/navigation",
-        "databases/reusable-snippets"
+        "databases/snowflake"
       ]
     }    
   ],
