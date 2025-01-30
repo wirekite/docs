@@ -52,7 +52,7 @@
       ]
     },
     {
-      "group": "Data Types",
+      "group": "Datatype Matrices",
       "pages": [
         "datatypes/mysql",
         "datatypes/postgres",
