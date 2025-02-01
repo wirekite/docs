@@ -7,17 +7,17 @@ description: "Welcome to Wirekite Documentation and Reference. Here you will fin
 
 Wirekite is a highly performant, cross database, dump, load and replication platform. To break down the definition wirekite is&#x20;
 
-* Performant - We pride ourselves in being extremely fast. Please visit our benchmarks.
+* **Performant** - We pride ourselves in being extremely fast. Please visit our benchmarks.
 
 <Note>
   **Wirekite is 10x-100x faster than its competitors.**
 </Note>
 
-* Cross Database - Wirekite allows you to move data from Postgres, MySQL and Oracle to multiple cloud databases. For now we are supporting Cloud versions of MySQL and Postgres and Snowflake. We will be adding more Cloud targets in future.&#x20;
+* **Cross Database** - Wirekite allows you to move data from Postgres, MySQL and Oracle to multiple cloud databases. For now we are supporting Cloud versions of MySQL and Postgres and Snowflake. We will be adding more Cloud targets in future.&#x20;
 
-* Dump, Load - Wirekite to allows you to dump and load data from source databases. Part of any data migration (whether one time or ongoing) involves taking an initial dump of data and moving it to the target. Wirekite prides itself in moving copious amounts of data (TBs / PBs) in much shorter time frames than other technologies.
+* **Dump, Load** - Wirekite to allows you to dump and load data from source databases. Part of any data migration (whether one time or ongoing) involves taking an initial dump of data and moving it to the target. Wirekite prides itself in moving copious amounts of data (TBs / PBs) in much shorter time frames than other technologies.
 
-* Replication - In addition to moving large data, wirekite allows you to keep the data on the target fresh from the source. This helps enormously with doing an application switch over from source to target while affording relatively small downtime.&#x20;
+* **Replication** - In addition to moving large data, wirekite allows you to keep the data on the target fresh from the source. This helps enormously with doing an application switch over from source to target while affording relatively small downtime.&#x20;
 
 ## Why Wirekite
 
@@ -47,18 +47,18 @@ Wirekite helps with both.
 
 Lets talk about both cases in a bit more detail.
 
-### Application Migration 
+### Application Migration
 
 Sooner or later you will encounter a scenario where you will have to migrate your application to a new platform. This is very common these days since many firms are migrating their whole infrastructure to the cloud. Migrating a production application to the cloud will have one very firm constraint - downtime. Wirekite makes sure that your downtime is minimal.
 
-Furthermore your technical committee might decide to write an "interm" application that migrates the data, in small chunks, in a continuous fashion to the new data store. This poses a multitude of problems since now you have to keep track of how much data has been migrated and possibilities of drift between the two data stores. Wirekite frees your from all the vulnerabilities of writing such interim infrastrcuture. 
+Furthermore your technical committee might decide to write an "interim" application that migrates the data, in small chunks, in a continuous fashion to the new data store. This poses a multitude of problems since now you have to keep track of how much data has been migrated and possibilities of drift between the two data stores. Wirekite frees your from all the vulnerabilities of writing such interim infrastructure.
 
-A much better approach would be to migrate the data to the new data store, while also making sure that the new data store is continuously replicated from the source with a minimal lag. Once this design is in place all you have to do is switchove the application to work on the new data store. Wirekite thrives in creating such an infrastructure. 
+A much better approach would be to migrate the data to the new data store, while also making sure that the new data store is continuously replicated from the source with a minimal lag. Once this design is in place all you have to do is switchover the application to work on the new data store. Wirekite thrives in creating such an infrastructure.
 
 ### Data Warehouse Pipelines
 
-A mature data infrastrcuture usually has two components - A production OLTP database which serves the production application, and a secondary Data Warehouse / Analytics database which can be used by the analytic applications. 
+A mature data infrastructure usually has two components - A production OLTP database which serves the production application, and a secondary Data Warehouse / Analytics database which can be used by the analytic applications.
 
-The two databases usually have vastly different schemas and hence there are ETL pipelines going from OLTP to DW. ETL pipelines come with a variety of disadvantages causing delays in the arrival of data in the data warehouse, thus preventing quick analysis of data to make relevant decisions. Fairly recently we are seeing the advent of ELT pipelines where the loading is done first allowing the analysis of data to occur sooner the later. 
+The two databases usually have vastly different schemas and hence there are ETL pipelines going from OLTP to DW. ETL pipelines come with a variety of disadvantages causing delays in the arrival of data in the data warehouse, thus preventing quick analysis of data to make relevant decisions. Fairly recently we are seeing the advent of ELT pipelines where the loading is done first allowing the analysis of data to occur sooner the later.
 
 Wirekite allows the "loading" component of the data to be order of magnitude faster and also allows the loaded data to be updated with the source data with a lag of few seconds.
