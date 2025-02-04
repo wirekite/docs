@@ -3,11 +3,48 @@ title: "Architecture"
 description: "This page talks about the general architecture of Wirekite, the various components that comprise it and functions, limitations of those components. For a more detailed architecture please check the Implementation page.  "
 ---
 
-## ![](/SimpleArchitecture.png)
+## ![](/SimpleArchitecture.jpg)
 
 ## Flow
 
-Simply speaking wirekite sits in the middle of source and target databases.
+Simply speaking wirekite sits in the middle of source and target databases, extracts "stuff" from source databases, moves it to relevant middle ware storage, and loads it onto the target databases. Thus essentially it has 3 components as explained next.
+
+## Entities&#x20;
+
+Wirekite extracts and loads 3 entities from the source database into the target database and in the following order.
+
+
+
+<Steps>
+  <Step title="Schema">
+Schema essentially refers to the "structure" of the data. It constitutes the definition of tables, the columns, their datatypes, any other properties like are they primary keys, unique keys, foreign keys etc. This is a one time task t
+  </Step>
+
+  <Step title="Data">
+Data at this stage refers to the initial dump of data. Usually this means a large number of tables which can be large in size (TBs/PBs). Note that this is the 
+
+  </Step>
+  <Step title="Change">
+Change refers to the constant "changes" that happen to the source database. Typically this means Inserts, Updates and Deletes. Note that this happens infinitely and Wirekite establishes a pipeline 
+
+  </Step>
+</Steps>
+
+
+
+
+
+/
+
+Wirekite essentially has 3 components, each of these components&#x20;
+
+<Steps>
+  <Step title="Extractor" />
+
+  <Step title="Movers" />
+
+  <Step title="Loaders" />
+</Steps>
 
 ### Edit and preview
 
