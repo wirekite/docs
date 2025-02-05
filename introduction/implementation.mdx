@@ -3,6 +3,61 @@ title: "Implementation"
 description: "Preview changes locally to update your docs"
 ---
 
+## Putting It Together
+
+Now that we have 3 entities -- schema, data and change -- and we have 3 components -- extractor, mover and loader -- we have to execute the components on he entities in a specific order.&#x20;
+
+The following sequence outlines how data migration will happen and in what sequence. &#x20;
+
+<Steps>
+  <Step title="Schema">
+    <CardGroup cols="3">
+      <Card title="Schema Extractor" icon="paintbrush" href="/introduction/architecture">
+        Extract the Schema of your source database. One Time.
+      </Card>
+
+      <Card title="Schema Mover" icon="paintbrush" href="/introduction/architecture">
+        Move the Schema from source to target database. One Time.
+      </Card>
+
+      <Card title="Schema Loader" icon="square-code" href="/introduction/architecture">
+        Load the schema on the target database. One Time.
+      </Card>
+    </CardGroup>
+  </Step>
+
+  <Step title="Data">
+    <CardGroup cols="3">
+      <Card title="Data Extractor" icon="paintbrush" href="/introduction/architecture">
+        Extract the Data of your source database. One Time.
+      </Card>
+
+      <Card title="Data Mover" icon="paintbrush" href="/introduction/architecture">
+        Move the Data from source to target database. One Time.
+      </Card>
+
+      <Card title="Data Loader" icon="square-code" href="/introduction/architecture">
+        Load the data on the target database. One Time.
+      </Card>
+    </CardGroup>
+  </Step>
+
+  <Step title="Change">
+    <CardGroup cols="3">
+      <Card title="Change Extractor" icon="paintbrush" href="/introduction/architecture">
+        Extract the Changes from your source database. Continuous.
+      </Card>
+
+      <Card title="Change Mover" icon="paintbrush" href="/introduction/architecture">
+        Move the Change files from source to target database. Continuous.
+      </Card>
+
+      <Card title="Change Loader" icon="square-code" href="/introduction/architecture">
+        Load the changes on the target database. Continuous.
+      </Card>
+    </CardGroup>
+  </Step>
+</Steps>
 <Info>
   **Prerequisite**: Please install Node.js (version 19 or higher) before proceeding.
 </Info>
