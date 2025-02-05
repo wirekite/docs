@@ -32,15 +32,15 @@ Wirekite extracts and loads 3 entities from the source database into the target 
 Wirekite essentially has 3 components which are essentially the actions that are taken on the entities listed above.&#x20;
 
 <Steps>
-  <Step title="Extractor">
+  <Step title="Extractor" />
     This is the component that extracts schema, data and change from the source database. Extractors are only aware of sources and are completely agnostic to the next steps that follow after. Thus this component essentially "reads" from the source database to "writes" to the relevant storage.
   </Step>
   
-  <Step title="Movers" />
+  <Step title="Mover" />
     This is the component that does the moving of the files from source database to target. Note that this component is agnostic to the contents of the files and does not read/write the, but essentially just moves the blocks from one storage location to another. 
   </Step>
     
-  <Step title="Loaders" />
+  <Step title="Loader" />
     This is the component that reads the file which are moved by the mover and "loads" them onto the target databases. Loaders work on schema, data and change files. Loaders essentially read the files and transalate them to corresponding database language statements and execute those statements on the database. 
 </Steps>
 
