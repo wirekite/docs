@@ -14,7 +14,6 @@ Simply speaking wirekite sits in the middle of source and target databases, extr
 Wirekite extracts and loads 3 entities from the source database into the target database and in the following order.
 
 <Steps>
-  
   <Step title="Schema">
     Schema essentially refers to the "structure" of the data. It constitutes the definition of tables, the columns, their datatypes, any other properties like primary keys, unique keys, foreign keys, constraints etc. Thus the Schema files contain create table statement. This is a one time task so that we have empty tables in the target database that can receive the incoming data in the next steps.
   </Step>
@@ -26,7 +25,6 @@ Wirekite extracts and loads 3 entities from the source database into the target 
   <Step title="Change">
     Change refers to the constant "changes" that happen to the source database. Typically this means Inserts, Updates and Deletes. Note that this happens infinitely and Wirekite establishes a pipeline from the source to the target so that target is kept up to date to the source. Thus this is an ongoing process. Also note that this is usually a single threaded process since the transaction that are happening on source need to be executed on the target in the exact same order.
   </Step>
-  
 </Steps>
 
 ## Components
@@ -34,7 +32,6 @@ Wirekite extracts and loads 3 entities from the source database into the target 
 Wirekite essentially has 3 components which are essentially the actions that are taken on the entities listed above.&#x20;
 
 <Steps>
-  
   <Step title="Extractor">
     This is the component that extracts schema, data and change from the source database. Extractors are only aware of sources and are completely agnostic to the next steps that follow after. Thus this component essentially "reads" from the source database to "writes" to the relevant storage.
   </Step>
@@ -46,61 +43,60 @@ Wirekite essentially has 3 components which are essentially the actions that are
   <Step title="Loader">
     This is the component that reads the file which are moved by the mover and "loads" them onto the target databases. Loaders work on schema, data and change files. Loaders essentially read the files and translate them to corresponding database language statements and execute those statements on the database.
   </Step>
-  
 </Steps>
 
 ### Putting It Together
-
-
 
 Now that we have 3 entities -- schema, data and change -- and we have 3 components -- extractor, mover and loader -- we have to execute the components on he entities in a specific order.&#x20;
 
 The following sequence outlines how all the components on the various entities. For more details please go to the Implementation section.&#x20;
 
-
-
 <Steps>
-  
   <Step title="Schema">
-    <CardGroup cols=3>
+    <CardGroup cols="3">
       <Card title="Schema Extractor" icon="paintbrush" href="/introduction/architecture">
-    Extract the Schema of your source database. One Time.
+        Extract the Schema of your source database. One Time.
       </Card>
+
       <Card title="Schema Mover" icon="paintbrush" href="/introduction/architecture">
-    Move the Schema from source to target database. One Time.
+        Move the Schema from source to target database. One Time.
       </Card>
+
       <Card title="Schema Loader" icon="square-code" href="/introduction/architecture">
-    Load the schema on the target database. One Time.
+        Load the schema on the target database. One Time.
       </Card>
     </CardGroup>
   </Step>
 
   <Step title="Data">
-    <CardGroup>
+    <CardGroup cols="3">
       <Card title="Data Extractor" icon="paintbrush" href="/introduction/architecture">
-    Extract the Data of your source database. One Time.
+        Extract the Data of your source database. One Time.
       </Card>
+
       <Card title="Data Mover" icon="paintbrush" href="/introduction/architecture">
-    Move the Data from source to target database. One Time.
+        Move the Data from source to target database. One Time.
       </Card>
+
       <Card title="Data Loader" icon="square-code" href="/introduction/architecture">
-    Load the data on the target database. One Time.
+        Load the data on the target database. One Time.
       </Card>
     </CardGroup>
   </Step>
 
   <Step title="Change">
-    <CardGroup>
+    <CardGroup cols="3">
       <Card title="Change Extractor" icon="paintbrush" href="/introduction/architecture">
-    Extract the Changes from your source database. Continuous.
+        Extract the Changes from your source database. Continuous.
       </Card>
+
       <Card title="Change Mover" icon="paintbrush" href="/introduction/architecture">
-    Move the Change files from source to target database. Continuous.
+        Move the Change files from source to target database. Continuous.
       </Card>
+
       <Card title="Change Loader" icon="square-code" href="/introduction/architecture">
-    Load the changes on the target database. Continuous.
+        Load the changes on the target database. Continuous.
       </Card>
     </CardGroup>
   </Step>
-
 </Steps>
