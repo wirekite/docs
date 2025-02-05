@@ -65,7 +65,9 @@ The sequence that is to be followed in a real production infrastructure is as fo
 
 The following architectural diagram is much more fleshed out and talks about how data will be migrated to a target database and how a replication pipeline will be established from source to target database.&#x20;
 
-![](/images/DetailedArchitecture.svg)
+<Frame caption="Wirekite Implementation and Sequence">
+  <img src="/images/DetailedArchitecture.svg" />
+</Frame>
 
 ## Salient Points
 
@@ -75,18 +77,18 @@ Note that these are some of the noteworthy points regarding the above diagram.&#
 
 2. Note that data components (extractor, mover, loader) can and should run in parallel. This minimizes the amount of time required to load an initial dump. The shorter the initial dump/move/load time the shorter the lag when we turn on the change replication.
 
-3. The performance (latency/throughput) characteristics of the networking components as well as the storage components (source/target) matter a lot and should be appropriately scaled to the size and activity of the database.
+3. The performance characteristics (latency/throughput) of the networking components ss well as the storage components (source/target) matter a lot and should be appropriately scaled to the size and activity of the database.
 
-4. It is very important that the performance of the change replication is more than the rate at which change is happening on the database. Specifically the following equation must hold true.&#x20;
+4. It is very important that the performance of the change replication should be more than the rate at which change is happening on the database. Specifically the following equation must hold true.&#x20;
 
 ```cpp
-wirekite_extract_time + wirekite_ship_time + wirekite_load_time > source_database_change_generation_time.
+wirekite_extract_time + wirekite_ship_time + wirekite_load_time < source_database_change_generation_time.
 ```
 
 For example if you are generating a 1 GB binlog in 10 seconds, you should be able to extract,ship and apply one binlog in less than 10 seconds. If this does not happen then the target database will not catchup to the source database and lag will keep growing infinitely.
 
-5. Data processes can be parallelized but Change processes cannot be parallelized since they need to run in a particular order.
+1. Data processes can be parallelized but Change processes cannot be parallelized since they need to run in a particular order.
 
-6. We can filter on table level so we should only migrate tables that are needed on the target database.
+2. We can filter on table level so we should only migrate tables that are needed on the target database.
 
-7. Wirekite does support transactions. 
+3. Wirekite does support transactions.

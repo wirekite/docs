@@ -3,7 +3,9 @@ title: "Architecture"
 description: "This page talks about the general architecture of Wirekite, the various components that comprise it and functions, limitations of those components. For a more detailed architecture please check the Implementation page.  "
 ---
 
-## ![](/images/SimpleArchitecture.svg)
+<Frame caption="Architecture">
+  <img src="/images/SimpleArchitecture.svg" />
+</Frame>
 
 ## Flow
 
@@ -44,4 +46,3 @@ Wirekite essentially has 3 components which are essentially the actions that are
     This is the component that reads the file which are moved by the mover and "loads" them onto the target databases. Loaders work on schema, data and change files. Loaders essentially read the files and translate them to corresponding database language statements and execute those statements on the database.
   </Step>
 </Steps>
-
