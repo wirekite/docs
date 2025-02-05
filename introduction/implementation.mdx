@@ -14,15 +14,15 @@ The sequence that is to be followed in a real production infrastructure is as fo
 <Steps>
   <Step title="Schema">
     <CardGroup cols="3">
-      <Card title="Schema Extractor" icon={1} iconType="solid" horizontal={false} href="/introduction/architecture">
+      <Card title="Schema Extractor" icon="shapes" iconType="solid" horizontal={false} href="/introduction/implementation">
         Extract the Schema of your source database. One Time.
       </Card>
 
-      <Card title="Schema Mover" icon={2} iconType="solid" horizontal={false} href="/introduction/architecture">
+      <Card title="Schema Mover" icon="arrow-right" iconType="solid" horizontal={false} href="/introduction/implementation">
         Move the Schema from source to target database. One Time.
       </Card>
 
-      <Card title="Schema Loader" icon={3} iconType="solid" horizontal={false} href="/introduction/architecture">
+      <Card title="Schema Loader" icon="upload" iconType="solid" horizontal={false} href="/introduction/implementation">
         Load the schema on the target database. One Time.
       </Card>
     </CardGroup>
@@ -30,15 +30,15 @@ The sequence that is to be followed in a real production infrastructure is as fo
 
   <Step title="Data">
     <CardGroup cols="3">
-      <Card title="Data Extractor" icon={4} iconType="solid" href="/introduction/architecture">
+      <Card title="Data Extractor" icon="database" iconType="solid" href="/introduction/implementation">
         Extract the Data of your source database. One Time.
       </Card>
 
-      <Card title="Data Mover" icon={5} iconType="solid" href="/introduction/architecture">
+      <Card title="Data Mover" icon="arrow-right" iconType="solid" href="/introduction/implementation">
         Move the Data from source to target database. One Time.
       </Card>
 
-      <Card title="Data Loader" icon={6} iconType="solid" href="/introduction/architecture">
+      <Card title="Data Loader" icon="upload" iconType="solid" href="/introduction/implementation">
         Load the data on the target database. One Time.
       </Card>
     </CardGroup>
@@ -46,15 +46,15 @@ The sequence that is to be followed in a real production infrastructure is as fo
 
   <Step title="Change">
     <CardGroup cols="3">
-      <Card title="Change Extractor" icon={7} iconType="solid" href="/introduction/architecture">
+      <Card title="Change Extractor" icon="database" iconType="regular" href="/introduction/implementation">
         Extract the Changes from your source database. Continuous.
       </Card>
 
-      <Card title="Change Mover" icon={8} iconType="solid" href="/introduction/architecture">
+      <Card title="Change Mover" icon="arrow-right" iconType="solid" href="/introduction/implementation">
         Move the Change files from source to target database. Continuous.
       </Card>
 
-      <Card title="Change Loader" icon={9} iconType="solid" href="/introduction/architecture">
+      <Card title="Change Loader" icon="upload" iconType="solid" href="/introduction/implementation">
         Load the changes on the target database. Continuous.
       </Card>
     </CardGroup>
@@ -63,8 +63,30 @@ The sequence that is to be followed in a real production infrastructure is as fo
 
 ## Sequential Steps
 
-The following architectural diagram explains how data will be migrated to a target database and how a replication pipeline will be established from source to target database.&#x20;
-
-
+The following architectural diagram is much more fleshed out and talks about how data will be migrated to a target database and how a replication pipeline will be established from source to target database.&#x20;
 
 ![](/images/DetailedArchitecture.svg)
+
+## Salient Points
+
+Note that these are some of the noteworthy points regarding the above diagram.&#x20;
+
+1. Note that we are using a replica of the production database. This is almost always the case since we do not want to load the production database which is currently serving the live production application. The replication is usually established using the native replication technology pertinent to the database. &#x20;
+
+2. Note that data components (extractor, mover, loader) can and should run in parallel. This minimizes the amount of time required to load an initial dump. The shorter the initial dump/move/load time the shorter the lag when we turn on the change replication.
+
+3. The performance (latency/throughput) characteristics of the networking components as well as the storage components (source/target) matter a lot and should be appropriately scaled to the size and activity of the database.
+
+4. It is very important that the performance of the change replication is more than the rate at which change is happening on the database. Specifically the following equation must hold true.&#x20;
+
+```cpp
+wirekite_extract_time + wirekite_ship_time + wirekite_load_time > source_database_change_generation_time.
+```
+
+For example if you are generating a 1 GB binlog in 10 seconds, you should be able to extract,ship and apply one binlog in less than 10 seconds. If this does not happen then the target database will not catchup to the source database and lag will keep growing infinitely.
+
+5. Data processes can be parallelized but Change processes cannot be parallelized since they need to run in a particular order.
+
+6. We can filter on table level so we should only migrate tables that are needed on the target database.
+
+7. Wirekite does support transactions. 
