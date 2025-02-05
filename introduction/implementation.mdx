@@ -1,13 +1,15 @@
 ---
 title: "Implementation"
-description: "Preview changes locally to update your docs"
+description: "This page provides a more detailed view of the architecture, specifically relating to how will you implement wirekite in your infrastructure. "
 ---
 
-## Putting It Together
+## Wirekite Components&#x20;
 
-Now that we have 3 entities -- schema, data and change -- and we have 3 components -- extractor, mover and loader -- we have to execute the components on he entities in a specific order.&#x20;
+As we understood in the previous section, wirekite has 3 entities -- schema, data and change -- and 3 components -- extractor, mover and loader. The entities are the objects in the database that wirekite works upon, while components are the operators that work on the entities.&#x20;
 
-The following sequence outlines how data migration will happen and in what sequence. &#x20;
+Lets put these all together and we get a sequence in which all the components work on the entities to ultimately establish a target database which is continuosuly updated from the source database.  &#x20;
+
+The sequence that is to be followed in a real production infrastructure is as follows.  &#x20;
 
 <Steps>
   <Step title="Schema">
@@ -58,6 +60,7 @@ The following sequence outlines how data migration will happen and in what seque
     </CardGroup>
   </Step>
 </Steps>
+
 <Info>
   **Prerequisite**: Please install Node.js (version 19 or higher) before proceeding.
 </Info>
