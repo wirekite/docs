@@ -14,15 +14,15 @@ The sequence that is to be followed in a real production infrastructure is as fo
 <Steps>
   <Step title="Schema">
     <CardGroup cols="3">
-      <Card title="Schema Extractor" icon="paintbrush" horizontal={false} href="/introduction/architecture">
+      <Card title="Schema Extractor" icon={1} iconType="solid" horizontal={false} href="/introduction/architecture">
         Extract the Schema of your source database. One Time.
       </Card>
 
-      <Card title="Schema Mover" icon="paintbrush" horizontal={false} href="/introduction/architecture">
+      <Card title="Schema Mover" icon={2} iconType="solid" horizontal={false} href="/introduction/architecture">
         Move the Schema from source to target database. One Time.
       </Card>
 
-      <Card title="Schema Loader" icon="square-code" horizontal={false} href="/introduction/architecture">
+      <Card title="Schema Loader" icon={3} iconType="solid" horizontal={false} href="/introduction/architecture">
         Load the schema on the target database. One Time.
       </Card>
     </CardGroup>
@@ -30,15 +30,15 @@ The sequence that is to be followed in a real production infrastructure is as fo
 
   <Step title="Data">
     <CardGroup cols="3">
-      <Card title="Data Extractor" icon="paintbrush" href="/introduction/architecture">
+      <Card title="Data Extractor" icon={4} iconType="solid" href="/introduction/architecture">
         Extract the Data of your source database. One Time.
       </Card>
 
-      <Card title="Data Mover" icon="paintbrush" href="/introduction/architecture">
+      <Card title="Data Mover" icon={5} iconType="solid" href="/introduction/architecture">
         Move the Data from source to target database. One Time.
       </Card>
 
-      <Card title="Data Loader" icon="square-code" href="/introduction/architecture">
+      <Card title="Data Loader" icon={6} iconType="solid" href="/introduction/architecture">
         Load the data on the target database. One Time.
       </Card>
     </CardGroup>
@@ -46,23 +46,25 @@ The sequence that is to be followed in a real production infrastructure is as fo
 
   <Step title="Change">
     <CardGroup cols="3">
-      <Card title="Change Extractor" icon="paintbrush" href="/introduction/architecture">
+      <Card title="Change Extractor" icon={7} iconType="solid" href="/introduction/architecture">
         Extract the Changes from your source database. Continuous.
       </Card>
 
-      <Card title="Change Mover" icon="paintbrush" href="/introduction/architecture">
+      <Card title="Change Mover" icon={8} iconType="solid" href="/introduction/architecture">
         Move the Change files from source to target database. Continuous.
       </Card>
 
-      <Card title="Change Loader" icon="square-code" href="/introduction/architecture">
+      <Card title="Change Loader" icon={9} iconType="solid" href="/introduction/architecture">
         Load the changes on the target database. Continuous.
       </Card>
     </CardGroup>
   </Step>
 </Steps>
 
-## Sequence&#x20;
+## Sequential Steps
 
-The following architectural diagram explains how data will be migrated to a target database and how a replication pipeline will be established from source to target database.
+The following architectural diagram explains how data will be migrated to a target database and how a replication pipeline will be established from source to target database.&#x20;
+
+
 
 ![](/images/DetailedArchitecture.svg)
