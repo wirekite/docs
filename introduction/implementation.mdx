@@ -79,16 +79,12 @@ Note that these are some of the noteworthy points regarding the above diagram.&#
 
 3. The performance characteristics (latency/throughput) of the networking components ss well as the storage components (source/target) matter a lot and should be appropriately scaled to the size and activity of the database.
 
-4. It is very important that the performance of the change replication should be more than the rate at which change is happening on the database. Specifically the following equation must hold true.&#x20;
+4. It is very important that the performance of the change replication should be more than the rate at which change is happening on the database. For example if you are generating a 1 GB binlog in 10 seconds, you should be able to extract,ship and apply one binlog in less than 10 seconds. If this does not happen then the target database will not catchup to the source database and lag will keep growing infinitely. Specifically the following equation must hold true.&#x20;
 
-```cpp
-wirekite_extract_time + wirekite_ship_time + wirekite_load_time < source_database_change_generation_time.
-```
+<Note>
+  wirekite\_extraction\_time +
 
-For example if you are generating a 1 GB binlog in 10 seconds, you should be able to extract,ship and apply one binlog in less than 10 seconds. If this does not happen then the target database will not catchup to the source database and lag will keep growing infinitely.
+  wirekite\_ship\_time +                    \<       change\_generation\_time
 
-1. Data processes can be parallelized but Change processes cannot be parallelized since they need to run in a particular order.
-
-2. We can filter on table level so we should only migrate tables that are needed on the target database.
-
-3. Wirekite does support transactions.
+  wirekite\_load\_time
+</Note>
