@@ -15,15 +15,15 @@ The following table explains how the PostgreSQL datatypes are mapped to the targ
 | `INT`                | `INT`           |
 | `BIGINT`             | `BIGINT`        |
 | `NUMERIC`            | `NUMBER`        |
-|`FLOAT`||
-|`DOUBLE PRECISION`||
+|`FLOAT`               | `FLOAT`                |
+|`DOUBLE PRECISION`|`FLOAT`|
 | **Times**            |                 |
 | `DATE`               | `DATE`          |
 | `TIME`               | `TIME`          |
-| `TIMESTAMP`          | `TIMESTAMP_LTZ` |
-|`TIMESTAMP WITH TIME ZONE`||
-|`TIME WITH TIME ZONE`||
-|`INTERVAL`||
+| `TIMESTAMP`          | `TIMESTAMP_NTZ` |
+|`TIMESTAMP WITH TIME ZONE`|`TIMESTAMP_LTZ`|
+|`TIME WITH TIME ZONE`|`VARCHAR(32)`|
+|`INTERVAL`|`VARCHAR(64)`|
 | **Strings**          |                 |
 | `CHAR`               | `VARCHAR`       |
 | `VARCHAR`            | `VARCHAR`       |
@@ -31,10 +31,10 @@ The following table explains how the PostgreSQL datatypes are mapped to the targ
 | `TEXT`           | `VARCHAR`       |
 | **Blobs**            |                 |
 | `BIT`                | `BINARY`        |
-| `BOOL`                | `BINARY`        |
+| `BOOL`                | `BOOLEAN`        |
 | `BYTEA`               | `BINARY`        |
 | `JSON`               | `VARCHAR`       |
-|`XML`|VARCHAR|
+|`XML`|`VARCHAR`|
 | **Miscellaneous**             |                 |
 |`MONEY`|`NUMBER(16,2)`|
 |`CIDR`|`VARCHAR(64)`|
