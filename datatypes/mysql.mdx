@@ -30,25 +30,25 @@ The following table explains how the MySQL datatypes are mapped to the target da
 | `FLOAT UNSIGNED`     | `DOUBLE PRECISION`           |           |
 | `DOUBLE UNSIGNED`    | `N/A`           |           |
 |**Times**             |            |           |
-| `DATE`               |  `DATE`          |           |
-| `TIME`               |            |           |
-| `DATETIME`           |            |           |
-| `TIMESTAMP`          |            |           |
-| `YEAR`               |            |           |
+| `DATE`               | `DATE`          |           |
+| `TIME`               | `TIME`          |           |
+| `DATETIME`           | `TIMESTAMP`          |           |
+| `TIMESTAMP`          | `TIMESTAMP WITH TIME ZONE`          |           |
+| `YEAR`               |  `SMALLINT`         |           |
 |**Strings**           |            |           |
-| `CHAR`               |            |           |
-| `VARCHAR`            |            |           |
-| `TINYTEXT`           |            |           |
-| `MEDIUMTEXT`         |            |           |
-| `TEXT`               |            |           |
-| `LONGTEXT`           |            |           |
+| `CHAR`               |  `CHAR`          |           |
+| `VARCHAR`            |   `VARCHAR`         |           |
+| `TINYTEXT`           |  `TEXT`          |           |
+| `MEDIUMTEXT`         |  `TEXT`          |           |
+| `TEXT`               |  `TEXT`          |           |
+| `LONGTEXT`           |  `TEXT`          |           |
 |**Blobs**             |            |           |
-| `BINARY`             |            |           |
-| `VARBINARY`          |            |           |
-| `TINYBLOB`           |            |           |
-| `MEDIUMBLOB`         |            |           |
-| `BLOB`               |            |           |
-| `JSON`               |            |           |
+| `BINARY`             |   `BYTEA`         |           |
+| `VARBINARY`          |  `BYTEA`          |           |
+| `TINYBLOB`           |  `BYTEA`          |           |
+| `MEDIUMBLOB`         |  `BYTEA`          |           |
+| `BLOB`               |  `BYTEA`          |           |
+| `JSON`               |  `JSON`          |           |
 |**Sets**              |            |           |
-| `ENUM`               |            |           |
-| `SET`                |            |           |
+| `ENUM`               |  `VARCHAR(64)`          |           |
+| `SET`                |  `VARCHAR(64)`          |           |
