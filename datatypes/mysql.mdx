@@ -8,47 +8,47 @@ icon: "gear"
 
 The following table explains how the MySQL datatypes are mapped to the target databases.
 
-| MySQL                | PostgreSQL | Snowflake |
-| :------------------- | :--------- | :-------- |
-| `BIT`                |`BIT`       |           |
-|**Numbers**           |            |           |
-| `TINYINT`            |`SMALLINT`            |           |
-| `SMALLINT`           |`SMALLINT`            |           |
-| `MEDIUMINT`          |`INT`            |           |
-| `INT`                |`INT`            |           |
-| `BIGINT`             | `BIGINT`           |           |
-| `DECIMAL`            | `NUMERIC`           |           |
-| `FLOAT`              | `FLOAT`           |           |
-| `DOUBLE`             | `DOUBLE PRECISION`           |           |
-|**Numbers Unsigned**  |            |           |
-| `TINYINT UNSIGNED`   | `SMALLINT`           |           |
-| `SMALLINT UNSIGNED`  | `INT`          |           |
-| `MEDIUMINT UNSIGNED` | `INT`           |           |
-| `INT UNSIGNED`       | `BIGINT`           |           |
-| `BIGINT UNSIGNED`    | `NUMERIC(21)`          |           |
-| `DECIMAL UNSIGNED`   | `NUMERIC(N+1)`           |           |
-| `FLOAT UNSIGNED`     | `DOUBLE PRECISION`           |           |
-| `DOUBLE UNSIGNED`    | `N/A`           |           |
-|**Times**             |            |           |
-| `DATE`               | `DATE`          |           |
-| `TIME`               | `TIME`          |           |
-| `DATETIME`           | `TIMESTAMP`          |           |
-| `TIMESTAMP`          | `TIMESTAMP WITH TIME ZONE`          |           |
-| `YEAR`               |  `SMALLINT`         |           |
-|**Strings**           |            |           |
-| `CHAR`               |  `CHAR`          |           |
-| `VARCHAR`            |   `VARCHAR`         |           |
-| `TINYTEXT`           |  `TEXT`          |           |
-| `MEDIUMTEXT`         |  `TEXT`          |           |
-| `TEXT`               |  `TEXT`          |           |
-| `LONGTEXT`           |  `TEXT`          |           |
-|**Blobs**             |            |           |
-| `BINARY`             |   `BYTEA`         |           |
-| `VARBINARY`          |  `BYTEA`          |           |
-| `TINYBLOB`           |  `BYTEA`          |           |
-| `MEDIUMBLOB`         |  `BYTEA`          |           |
-| `BLOB`               |  `BYTEA`          |           |
-| `JSON`               |  `JSON`          |           |
-|**Sets**              |            |           |
-| `ENUM`               |  `VARCHAR(64)`          |           |
-| `SET`                |  `VARCHAR(64)`          |           |
+| MySQL                | PostgreSQL                 | Snowflake |
+| :------------------- | :------------------------- | :-------- |
+| `BIT`                | `BIT`                      | `BINARY`       |
+| **Numbers**          |                            |           |
+| `TINYINT`            | `SMALLINT`                 | `TINYINT`       |
+| `SMALLINT`           | `SMALLINT`                 | `NUMBER`          |
+| `MEDIUMINT`          | `INT`                      | `NUMBER`          |
+| `INT`                | `INT`                      | `INT`         |
+| `BIGINT`             | `BIGINT`                   | `BIGINT`          |
+| `DECIMAL`            | `NUMERIC`                  | `NUMBER`          |
+| `FLOAT`              | `FLOAT`                    | `FLOAT`          |
+| `DOUBLE`             | `DOUBLE PRECISION`         | `FLOAT`          |
+| **Numbers Unsigned** |                            |           |
+| `TINYINT UNSIGNED`   | `SMALLINT`                 | `NUMBER`          |
+| `SMALLINT UNSIGNED`  | `INT`                      | `NUMBER`          |
+| `MEDIUMINT UNSIGNED` | `INT`                      | `NUMBER`          |
+| `INT UNSIGNED`       | `BIGINT`                   | `NUMBER`          |
+| `BIGINT UNSIGNED`    | `NUMERIC(21)`              | `NUMBER`          |
+| `DECIMAL UNSIGNED`   | `NUMERIC(N+1)`             | `NUMBER`          |
+| `FLOAT UNSIGNED`     | `DOUBLE PRECISION`         | `FLOAT`          |
+| `DOUBLE UNSIGNED`    | `N/A`                      | `N/A`          |
+| **Times**            |                            |           |
+| `DATE`               | `DATE`                     | `DATE`          |
+| `TIME`               | `TIME`                     | `TIME`          |
+| `DATETIME`           | `TIMESTAMP`                | `TIMESTAMP_NTZ` |
+| `TIMESTAMP`          | `TIMESTAMP WITH TIME ZONE` | `TIMESTAMP_LTZ` |
+| `YEAR`               | `SMALLINT`                 | `INT`          |
+| **Strings**          |                            |           |
+| `CHAR`               | `CHAR`                     |           |
+| `VARCHAR`            | `VARCHAR`                  |           |
+| `TINYTEXT`           | `TEXT`                     |           |
+| `MEDIUMTEXT`         | `TEXT`                     |           |
+| `TEXT`               | `TEXT`                     |           |
+| `LONGTEXT`           | `TEXT`                     |           |
+| **Blobs**            |                            |           |
+| `BINARY`             | `BYTEA`                    |           |
+| `VARBINARY`          | `BYTEA`                    |           |
+| `TINYBLOB`           | `BYTEA`                    |           |
+| `MEDIUMBLOB`         | `BYTEA`                    |           |
+| `BLOB`               | `BYTEA`                    |           |
+| `JSON`               | `JSON`                     |           |
+| **Sets**             |                            |           |
+| `ENUM`               | `VARCHAR(64)`              |           |
+| `SET`                | `VARCHAR(64)`              |           |

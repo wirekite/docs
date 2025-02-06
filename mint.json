@@ -15,6 +15,9 @@
       "to": "#a30b03"
     }
   },
+  "codeBlock": {
+    "mode" : "light"
+  }
   "topbarLinks": [
     {
       "name": "Email",
