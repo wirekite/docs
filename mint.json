@@ -16,7 +16,7 @@
     }
   },
   "codeBlock": {
-    "mode" : "light"
+    "mode" : "auto"
   },
   "topbarLinks": [
     {
