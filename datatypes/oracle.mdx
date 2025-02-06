@@ -8,27 +8,27 @@ icon: "database"
 
 The following table explains how the Oracle datatypes are mapped to the target databases.
 
-| Oracle                | PostgreSQL                 | Snowflake       |
-| :------------------- | :---------------------------- | :-------------- |
-| **Numbers**          |                            |                 |
-| `NUMBER`             | `NUMERIC`                   | `BIGINT`        |
-| `FLOAT`            | `FLOAT`                  | `NUMBER`        |
-| `BINARY_FLOAT`              | `FLOAT`                    | `FLOAT`  |
-| `BINARY_DOUBLE`             | `DOUBLE PRECISION`         | `FLOAT`  |
-| **Times**            |                            |                 |
-| `DATE`               | `TIMESTAMP`                     | `DATE`          |
-| `TIMESTAMP`          | `TIMESTAMP`                     | `TIME`          |
-| `TIMESTAMP WITH TIME ZONE` | `VARCHAR(32)`|`TIMESTAMP_NTZ` |
-| `TIMESTAMP WITH LOCAL TIME ZONE`| `TIMESTAMP WITH TIME ZONE`|`TIMESTAMP_LTZ` |
-| `INTERVAL DAY TO SECOND` | `INTERVAL`            | `INT`           |
-| `INTERVAL YEAR TO MONTH` | `INTERVAL`            | `DATE`          |
-| **Strings**          |                            |                 |
-| `CHAR`               | `CHAR`                     | `VARCHAR`       |
-| `NCHAR`            | `CHAR`                  | `VARCHAR`       |
-| `VARCHAR2`           | `VARCHAR`                     | `VARCHAR`       |
-| `NVARCHAR2`         | `VARCHAR`                     | `VARCHAR`       |
-| **Blobs**            |                            |                 |
-| `CLOB`           | `TEXT`                    | `BINARY`        |
-| `NCLOB`         | `TEXT`                    | `BINARY`        |
-| `RAW`               | `BYTEA`                    | `BINARY`        |
-| `BLOB`               | `BYTEA`                     | `VARCHAR`       |
+| Oracle                           | PostgreSQL                 | Snowflake       |
+| :------------------------------- | :------------------------- | :-------------- |
+| **Numbers**                      |                            |                 |
+| `NUMBER`                         | `NUMERIC`                  | `NUMBER`        |
+| `FLOAT`                          | `FLOAT`                    | `FLOAT`         |
+| `BINARY_FLOAT`                   | `FLOAT`                    | `FLOAT`         |
+| `BINARY_DOUBLE`                  | `DOUBLE PRECISION`         | `FLOAT`         |
+| **Times**                        |                            |                 |
+| `DATE`                           | `TIMESTAMP`                | `TIMESTAMP_NTZ` |
+| `TIMESTAMP`                      | `TIMESTAMP`                | `TIMESTAMP_NTZ` |
+| `TIMESTAMP WITH TIME ZONE`       | `VARCHAR(32)`              | `TIMESTAMP_TZ` |
+| `TIMESTAMP WITH LOCAL TIME ZONE` | `TIMESTAMP WITH TIME ZONE` | `TIMESTAMP_LTZ` |
+| `INTERVAL DAY TO SECOND`         | `INTERVAL`                 | `VARCHAR(64)`           |
+| `INTERVAL YEAR TO MONTH`         | `INTERVAL`                 | `VARCHAR(64)`          |
+| **Strings**                      |                            |                 |
+| `CHAR`                           | `CHAR`                     | `VARCHAR`       |
+| `NCHAR`                          | `CHAR`                     | `VARCHAR`       |
+| `VARCHAR2`                       | `VARCHAR`                  | `VARCHAR`       |
+| `NVARCHAR2`                      | `VARCHAR`                  | `VARCHAR`       |
+| **Blobs**                        |                            |                 |
+| `CLOB`                           | `TEXT`                     | `VARCHAR`        |
+| `NCLOB`                          | `TEXT`                     | `VARCHAR`        |
+| `RAW`                            | `BYTEA`                    | `BINARY`        |
+| `BLOB`                           | `BYTEA`                    | `BINARY`       |
