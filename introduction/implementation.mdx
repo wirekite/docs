@@ -7,59 +7,57 @@ description: "This page provides a more detailed view of the architecture, speci
 
 As we understood in the previous section, wirekite has 3 entities -- schema, data and change -- and 3 components -- extractor, mover and loader. The entities are the objects in the database that wirekite works upon, while components are the operators that work on the entities.&#x20;
 
-Lets put these all together and we get a sequence in which all the components work on the entities to ultimately establish a target database which is continuosuly updated from the source database.  &#x20;
+Lets put these all together and we get a sequence in which all the components work on the entities to ultimately establish a target database which is continuously updated from the source database.  &#x20;
 
 The sequence that is to be followed in a real production infrastructure is as follows.  &#x20;
 
-<Steps>
-  <Step title="Schema">
-    <CardGroup cols="3">
-      <Card title="Schema Extractor" icon="shapes" iconType="solid" horizontal={false} href="/introduction/implementation">
-        Extract the Schema of your source database. One Time.
-      </Card>
+### <Icon icon="1" iconType="solid" />	Schema
 
-      <Card title="Schema Mover" icon="arrow-right" iconType="solid" horizontal={false} href="/introduction/implementation">
-        Move the Schema from source to target database. One Time.
-      </Card>
+<CardGroup cols="3">
+  <Card title="Schema Extractor" icon="shapes" iconType="solid" horizontal={false} href="/introduction/implementation">
+    Extract the Schema of your source database. One Time.
+  </Card>
 
-      <Card title="Schema Loader" icon="upload" iconType="solid" horizontal={false} href="/introduction/implementation">
-        Load the schema on the target database. One Time.
-      </Card>
-    </CardGroup>
-  </Step>
+  <Card title="Schema Mover" icon="arrow-right" iconType="solid" horizontal={false} href="/introduction/implementation">
+    Move the Schema from source to target database. One Time.
+  </Card>
 
-  <Step title="Data">
-    <CardGroup cols="3">
-      <Card title="Data Extractor" icon="database" iconType="solid" href="/introduction/implementation">
-        Extract the Data of your source database. One Time.
-      </Card>
+  <Card title="Schema Loader" icon="upload" iconType="solid" horizontal={false} href="/introduction/implementation">
+    Load the schema on the target database. One Time.
+  </Card>
+</CardGroup>
 
-      <Card title="Data Mover" icon="arrow-right" iconType="solid" href="/introduction/implementation">
-        Move the Data from source to target database. One Time.
-      </Card>
+### <Icon icon="2" iconType="solid" />	Data
 
-      <Card title="Data Loader" icon="upload" iconType="solid" href="/introduction/implementation">
-        Load the data on the target database. One Time.
-      </Card>
-    </CardGroup>
-  </Step>
+<CardGroup cols="3">
+  <Card title="Data Extractor" icon="database" iconType="solid" href="/introduction/implementation">
+    Extract the Data of your source database. One Time.
+  </Card>
 
-  <Step title="Change">
-    <CardGroup cols="3">
-      <Card title="Change Extractor" icon="database" iconType="regular" href="/introduction/implementation">
-        Extract the Changes from your source database. Continuous.
-      </Card>
+  <Card title="Data Mover" icon="arrow-right" iconType="solid" href="/introduction/implementation">
+    Move the Data from source to target database. One Time.
+  </Card>
 
-      <Card title="Change Mover" icon="arrow-right" iconType="solid" href="/introduction/implementation">
-        Move the Change files from source to target database. Continuous.
-      </Card>
+  <Card title="Data Loader" icon="upload" iconType="solid" href="/introduction/implementation">
+    Load the data on the target database. One Time.
+  </Card>
+</CardGroup>
 
-      <Card title="Change Loader" icon="upload" iconType="solid" href="/introduction/implementation">
-        Load the changes on the target database. Continuous.
-      </Card>
-    </CardGroup>
-  </Step>
-</Steps>
+### <Icon icon="3" iconType="solid" />	Change
+
+<CardGroup cols="3">
+  <Card title="Change Extractor" icon="database" iconType="regular" href="/introduction/implementation">
+    Extract the Changes from your source database. Continuous.
+  </Card>
+
+  <Card title="Change Mover" icon="arrow-right" iconType="solid" href="/introduction/implementation">
+    Move the Change files from source to target database. Continuous.
+  </Card>
+
+  <Card title="Change Loader" icon="upload" iconType="solid" href="/introduction/implementation">
+    Load the changes on the target database. Continuous.
+  </Card>
+</CardGroup>
 
 ## Sequential Steps
 
@@ -82,9 +80,5 @@ Note that these are some of the noteworthy points regarding the above diagram.&#
 4. It is very important that the performance of the change replication should be more than the rate at which change is happening on the database. For example if you are generating a 1 GB binlog in 10 seconds, you should be able to extract,ship and apply one binlog in less than 10 seconds. If this does not happen then the target database will not catchup to the source database and lag will keep growing infinitely. Specifically the following equation must hold true.&#x20;
 
 <Note>
-  wirekite\_extraction\_time +
-
-  wirekite\_ship\_time +                    \<       change\_generation\_time
-
-  wirekite\_load\_time
+  wirekite\_extraction\_time + wirekite\_ship\_time + wirekite\_load\_time \< source\_database\_change\_generation\_time
 </Note>
