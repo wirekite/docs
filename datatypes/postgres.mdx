@@ -11,44 +11,44 @@ The following table explains how the PostgreSQL datatypes are mapped to the targ
 | PostgreSQL           | Snowflake       |
 | :------------------- | :-------------- |
 | **Numbers**          |                 |
-| `TINYINT`            | `TINYINT`       |
 | `SMALLINT`           | `NUMBER`        |
-| `MEDIUMINT`          | `NUMBER`        |
 | `INT`                | `INT`           |
 | `BIGINT`             | `BIGINT`        |
-| `DECIMAL`            | `NUMBER`        |
-| `FLOAT`              | `FLOAT`         |
-| `DOUBLE`             | `FLOAT`         |
-| **Numbers Unsigned** |                 |
-| `TINYINT UNSIGNED`   | `NUMBER`        |
-| `SMALLINT UNSIGNED`  | `NUMBER`        |
-| `MEDIUMINT UNSIGNED` | `NUMBER`        |
-| `INT UNSIGNED`       | `NUMBER`        |
-| `BIGINT UNSIGNED`    | `NUMBER`        |
-| `DECIMAL UNSIGNED`   | `NUMBER`        |
-| `FLOAT UNSIGNED`     | `FLOAT`         |
-| `DOUBLE UNSIGNED`    | `N/A`           |
+| `NUMERIC`            | `NUMBER`        |
+|`FLOAT`||
+|`DOUBLE PRECISION`||
 | **Times**            |                 |
 | `DATE`               | `DATE`          |
 | `TIME`               | `TIME`          |
-| `DATETIME`           | `TIMESTAMP_NTZ` |
 | `TIMESTAMP`          | `TIMESTAMP_LTZ` |
-| `YEAR`               | `INT`           |
+|`TIMESTAMP WITH TIME ZONE`||
+|`TIME WITH TIME ZONE`||
+|`INTERVAL`||
 | **Strings**          |                 |
 | `CHAR`               | `VARCHAR`       |
 | `VARCHAR`            | `VARCHAR`       |
-| `TINYTEXT`           | `VARCHAR`       |
-| `MEDIUMTEXT`         | `VARCHAR`       |
-| `TEXT`               | `VARCHAR`       |
-| `LONGTEXT`           | `VARCHAR`       |
+| `BPCHAR`            | `VARCHAR`       |
+| `TEXT`           | `VARCHAR`       |
 | **Blobs**            |                 |
 | `BIT`                | `BINARY`        |
-| `BINARY`             | `BINARY`        |
-| `VARBINARY`          | `BINARY`        |
-| `TINYBLOB`           | `BINARY`        |
-| `MEDIUMBLOB`         | `BINARY`        |
-| `BLOB`               | `BINARY`        |
+| `BOOL`                | `BINARY`        |
+| `BYTEA`               | `BINARY`        |
 | `JSON`               | `VARCHAR`       |
-| **Sets**             |                 |
-| `ENUM`               | `VARCHAR(64)`   |
-| `SET`                | `VARCHAR(64)`   |
+|`XML`|VARCHAR|
+| **Miscellaneous**             |                 |
+|`MONEY`|`NUMBER(16,2)`|
+|`CIDR`|`VARCHAR(64)`|
+|`INET`|`VARCHAR(64)`|
+|`MACADDR`|`VARCHAR(64)`|
+|`UUID`|`VARCHAR(64)`|
+|`TSVECTOR`|`VARCHAR(1024)`|
+|`TSQUERY`|`VARCHAR(256)`|
+|`ARR_<type>`|`VARCHAR(1024)`|
+|`POINT`|`VARCHAR(64)`|
+|`LINE`|`VARCHAR(64)`|
+|`LSEG`|`VARCHAR(64)`|
+|`BOX`|`VARCHAR(64)`|
+|`PATH`|`VARCHAR(64)`|
+|`POLYGON`|`VARCHAR(256)`|
+|`CIRCLE`|`VARCHAR(64)`|
+|`TXID_SNAPSHOT`|`VARCHAR(64)`|
