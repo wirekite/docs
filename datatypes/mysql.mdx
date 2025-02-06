@@ -36,19 +36,19 @@ The following table explains how the MySQL datatypes are mapped to the target da
 | `TIMESTAMP`          | `TIMESTAMP WITH TIME ZONE` | `TIMESTAMP_LTZ` |
 | `YEAR`               | `SMALLINT`                 | `INT`          |
 | **Strings**          |                            |           |
-| `CHAR`               | `CHAR`                     |           |
-| `VARCHAR`            | `VARCHAR`                  |           |
-| `TINYTEXT`           | `TEXT`                     |           |
-| `MEDIUMTEXT`         | `TEXT`                     |           |
-| `TEXT`               | `TEXT`                     |           |
-| `LONGTEXT`           | `TEXT`                     |           |
+| `CHAR`               | `CHAR`                     |   `VARCHAR`        |
+| `VARCHAR`            | `VARCHAR`                  |  `VARCHAR`         |
+| `TINYTEXT`           | `TEXT`                     |  `VARCHAR`         |
+| `MEDIUMTEXT`         | `TEXT`                     |  `VARCHAR`         |
+| `TEXT`               | `TEXT`                     |  `VARCHAR`         |
+| `LONGTEXT`           | `TEXT`                     |  `VARCHAR`         |
 | **Blobs**            |                            |           |
-| `BINARY`             | `BYTEA`                    |           |
-| `VARBINARY`          | `BYTEA`                    |           |
-| `TINYBLOB`           | `BYTEA`                    |           |
-| `MEDIUMBLOB`         | `BYTEA`                    |           |
-| `BLOB`               | `BYTEA`                    |           |
-| `JSON`               | `JSON`                     |           |
+| `BINARY`             | `BYTEA`                    |   `BINARY`        |
+| `VARBINARY`          | `BYTEA`                    |   `BINARY`        |
+| `TINYBLOB`           | `BYTEA`                    |   `BINARY`        |
+| `MEDIUMBLOB`         | `BYTEA`                    |   `BINARY`        |
+| `BLOB`               | `BYTEA`                    |   `BINARY`        |
+| `JSON`               | `JSON`                     |  `VARCHAR`         |
 | **Sets**             |                            |           |
-| `ENUM`               | `VARCHAR(64)`              |           |
-| `SET`                | `VARCHAR(64)`              |           |
+| `ENUM`               | `VARCHAR(64)`              |  `VARCHAR(64)`       |
+| `SET`                | `VARCHAR(64)`              |  `VARCHAR(64)`       |
