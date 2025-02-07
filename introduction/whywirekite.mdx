@@ -1,20 +1,47 @@
 ---
-title: 'Why Wirekite'
-description: 'This page talks about why you should wirekite as your data migration solution or as your data infrastructure pipelines from production database to data warehouse.'
+title: "Why Wirekite"
+description: "This page talks about why you should consider wirekite as your data migration solution or as your data pipeline infrastructure from your production database to data warehouse."
 ---
 
-## Why Wirekite
+## TL;DR
 
-Since the advent of computers data has been a very critical component of the infrastructure and technologies have been evolving ever since then to store and retrieve data in a performant container while keeping low costs. We have seen the rise of RDBMS databases, NoSQL databases and now we are in the era of Cloud databases that promise infinite scalability and elasticity. &#x20;
+We are faster, [way faster](https://wirekite.webflow.io/benchmarks). This allows you to have an order of magnitude shorter downtime when migrating your application from one infrastructure to another or to refresh your OLTP data in the Data Warehouse, so you can analyze the data quicker.
 
-Part of the problem is moving this data from one platform to another. Given that data volumes have exploded and applications have significantly shorter down times and SLAs, this problem has become the brunt of failures of most data migration projects.&#x20;
+Please check our benchmarks.
 
-Wirekite solves this problem.&#x20;
+## Background
 
-When you need your data in the target database as fast as possible look no further. Imagine you have a database of 10 TB and a data migration platform that moves data at 1 GB per second, you will take approx 2.8 hours to transfer the data. If the rate is amped up to 10GB per second, it will take 17 minutes to move the same amount of data. Now imagine if the rate is 100GB per second, you can do the migration in 1.7 minutes. Imagine the impact on application downtime going from 2.8 hours to 17 minutes to 1.7 minutes.&#x20;
+Since the advent of computers data has been a critical component of the infrastructure and technologies have evolved to store and retrieve data in a performant container while keeping costs low. We have seen the rise of RDBMS databases, NoSQL databases and now we are in the Cloud database era that promises infinite scalability and elasticity.
 
-<Note>
-  **Wirekite reduces application downtime from hours to minutes.**
-</Note>
+Part of the problem is moving this data from one platform to another. Given that data volumes have exploded and applications have significantly shorter downtimes SLAs, this problem has become the brunt of failures of most data migration projects.
 
-Note that wirekite is not doing a simple movement of bits but a complicated transition of bits from one database platform to another.&#x20;
+Wirekite solves this problem, much better than other technologies.
+
+## Data Migration Problem
+
+Imagine you have a database of 10 TB and a data migration solution that moves data at 1 GB per second, you will take approx 2.8 hours to transfer the data. If the rate is amped up to 10 GB per second, it will take 17 minutes to move the same amount of data. Now imagine if the rate is 100 GB per second, you can do the migration in 1.7 minutes.
+
+Imagine the impact on application downtime going from 2.8 hours to 1.7 minutes.&#x20;
+
+## Data Warehouse Pipeline Problem
+
+Imagine the same kind of performance impact when you can move 10 TB of data from your production OLTP database into your Data Warehouse. When you have recent data faster, your analysis is more valuable.
+
+## Performance
+
+### Extract and Load / Data
+
+One of the first stages of any data migration project is moving data to the target database. This involves extracting all the data and loading into the target database. Since the data does not have to be inserted in any given order in the target database, we can take advantage of large degree of parallelism.
+
+Here is a benchmark that shows the benefit.
+
+![](/images/benchmark1.svg)
+
+### Replication / Change
+
+Once the data is loaded to the target database wirekite makes sure that continuous changes that are happening in the source database are replicated to the target database. Note that changes happen on the source database in a given order and must be executed in the same order on the target database, thus preventing us from using parallelism. Wirekite handles the
+single threaded replication very efficiently.
+
+Here is a benchmark that demonstrates that efficiency.
+
+![](/images/benchmark2.svg)
