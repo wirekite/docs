@@ -50,6 +50,7 @@
       "group": "Introduction",
       "pages": [
         "introduction/overview",
+        "introduction/whywirekite",
         "introduction/architecture",
         "introduction/implementation"
       ]
