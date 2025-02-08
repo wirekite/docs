@@ -64,12 +64,12 @@
       ]
     },
     {
-      "group": "Databases",
+      "group": "Guides",
       "pages": [
-        "databases/mysql",
-        "databases/postgres",
-        "databases/oracle",
-        "databases/snowflake"
+        "guides/mysql",
+        "guides/postgres",
+        "guides/oracle",
+        "guides/snowflake"
       ]
     }    
   ],
