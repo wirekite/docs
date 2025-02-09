@@ -80,5 +80,5 @@ Note that these are some of the noteworthy points regarding the above diagram.&#
 4. It is very important that the performance of the change replication should be more than the rate at which change is happening on the database. For example if you are generating a 1 GB binlog in 10 seconds, you should be able to extract,ship and apply one binlog in less than 10 seconds. If this does not happen then the target database will not catchup to the source database and lag will keep growing infinitely. Specifically the following equation must hold true.&#x20;
 
 <Note>
-  wirekite\_extraction\_time + wirekite\_ship\_time + wirekite\_load\_time \< source\_database\_change\_generation\_time
+  **wirekite\_extraction\_time + wirekite\_ship\_time + wirekite\_load\_time \< source\_database\_change\_generation\_time**
 </Note>
