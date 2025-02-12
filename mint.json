@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Storter Kit", 
+  "name": "Starter Kit", 
   "logo": {
     "dark": "/images/docslogo_dark.svg",
     "light": "/images/docslogo_light.svg"
