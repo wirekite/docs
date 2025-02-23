@@ -21,12 +21,12 @@
   "topbarLinks": [
     {
       "name": "Email",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:hello@wirekite.io"
     }
   ],
   "topbarCtaButton": {
     "name": "Chat with Wirekite",
-    "url": "https://wirekite.slack.com/"
+    "url": "https://wirekite-public.slack.com/"
   },
   "anchors": [
     {
