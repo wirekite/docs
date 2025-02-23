@@ -5,7 +5,7 @@
     "dark": "/images/docslight.png",
     "light": "/images/docslight.png"
   },
-  "favicon": "/images/logo.png",
+  "favicon": "/images/logo.svg",
   "colors": {
     "primary": "#8a0303",
     "light": "#c90404",
