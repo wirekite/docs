@@ -1,37 +1,38 @@
 ---
-title: 'MySQL'
-description: 'Display inline code and code blocks'
-icon: 'code'
+title: "MySQL Wirekite Configuration"
+description: "This guide talks about what do you need to do to configure MySQL to use with Wirekite."
+icon: "code"
 ---
 
-## Basic
+## Extractor Prereqs
 
-### Inline Code
+To configure MySQL as an extractor you must have the following prereqs met.
 
-To denote a `word` or `phrase` as code, enclose it in backticks (`).
+ 1. Make sure that the database version is `5.x` and above.
+ 2. Make sure the tables being extracted are InnoDB tables.
+ 3. Make sure binlogging is enabled and format is ROW. `binlog_format = ROW` 
+ 4. Also make sure that `binlog_row_image` is set to appropriate value. Wirekite does not mandate any particular value, as long as the data that you are trying to extract is logged. 
+ 5. Make sure that you configure a user for wirekite with full privileges on the tables that we are extracting. It is strongly preferred to create a separate user for wirekite.
+ 6. Wirekite will also create some internal tables(wirekite_progress and wirekite_action). Make sure wirekite user has read and write privileges to those tables. 
+ 7. Make sure that MySQL has privileges to write to the directory where the wirekite output files will be generated. This can be configured by setting appropriate value for `secure_file_priv`.
+ 8. Also make sure `group_concat_max_len = 50000`
+ 9. When doing a data extract make sure that replication is stopped. This is to make sure that the dump is consistent to given mysql coordinate position.
+10. It is highly preferable to run wirekite on a slave of production database, since wirekite can generate lot of load on the database server.
 
-```
-To denote a `word` or `phrase` as code, enclose it in backticks (`).
-```
+## Schema Extractor
 
-### Code Block
+Schema extractor is a wirekite utility that extracts the schema related information for given tables. The schema extractor can be run independently or run as part of orchestrator (check orchestrator section). However you run it, the schema extractor needs certain configuration variables, which will have the same configurations whethere you run it using schema extractor or orchestrator. 
 
-Use [fenced code blocks](https://www.markdownguide.org/extended-syntax/#fenced-code-blocks) by enclosing code in three backticks and follow the leading ticks with the programming language of your snippet to get syntax highlighting. Optionally, you can also write the name of your code after the programming language.
+Here are the configuration variables required to run schema extractor.
 
-```java HelloWorld.java
-class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}
-```
+<ResponseField name="dsnFile" type="string" required>
+  dsnFile is the file containing the connection information for the mysql database. The connection information has the following format
+</ResponseField>
 
-````md
-```java HelloWorld.java
-class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}
-```
-````
+  ```c++
+  gkemnitz:gjk123@tcp(localhost:3306)/public?multiStatements=true&loc=Local
+  ```
+
+  <ResponseField name="outputDirectory" type="string" required>
+    outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries.
+  </ResponseField>
