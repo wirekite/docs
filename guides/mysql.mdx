@@ -26,13 +26,31 @@ Schema extractor is a wirekite utility that extracts the schema related informat
 Here are the configuration variables required to run schema extractor.
 
 <ResponseField name="dsnFile" type="string" required>
-  dsnFile is the file containing the connection information for the mysql database. The connection information has the following format
+  dsnFile is the file containing the connection information for the mysql database. 
 </ResponseField>
-
+The connection information has the following format
   ```c++
   gkemnitz:gjk123@tcp(localhost:3306)/public?multiStatements=true&loc=Local
   ```
 
   <ResponseField name="outputDirectory" type="string" required>
-    outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries.
+    outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write a file called wirekite_schema.skt in the outputDirectory.
   </ResponseField>
+
+  <ResponseField name="tablesFile" type="string" required>
+    tablesFile is a file with a list of all the tables that are being extracted.
+  </ResponseField>
+  The format of the tablesFile is as follows.
+  ```c++
+  database1.table1
+  database2.table2
+  database3.table3
+  ```
+
+  <ResponseField name="logFile" type="string" required>
+    logFile refers to the full path of the logfile where the extractor will write the logging information.
+  </ResponseField>
+
+  
+
+  
