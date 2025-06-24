@@ -35,13 +35,13 @@ Here are the configuration variables required to run the Schema Extractor.
   postgres://username:password@host:port/database
   ```
 
-  ### `outputDirectory string required`
-
+<ResponseField name="outputDirectory" type="string" required>
   outputDirectory is the file system directory that the Schema Extractor will write output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write a file called wirekite_schema.skt in the outputDirectory.
 </ResponseField>
 
 <ResponseField name="tablesFile" type="string" required>
   tablesFile is a file with a list of all the tables whose schemas are to be extracted.
+</ResponseField>
 
   The format of the tablesFile is as follows.
 
@@ -51,9 +51,9 @@ Here are the configuration variables required to run the Schema Extractor.
   database3.table3
   ```
 
-  ### `logFile string `required
-
+<ResponseField name="logFile" type="string" required>
   logFile is the full path of the log file where the Schema Extractor will write the logging information.
+</ResponseField>
 
   ## Data Extractor
 
@@ -61,48 +61,46 @@ Here are the configuration variables required to run the Schema Extractor.
 
   <ResponseField name="dsnFile" type="string" required>
     dsnFile is a file containing the connection information for the PostgreSQL database.
-
+</ResponseField>
     The connection information has the following format
 
     ```c++
     postgres://username:password@host:port/database
     ```
 
-    <ResponseField name="outputDirectory" type="string" required>
+<ResponseField name="outputDirectory" type="string" required>
       outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write files called table_name.number.dkt in the outputDirectory.
-
-      <ResponseField name="tablesFile" type="string" required>
-        tablesFile is a file with a list of all the tables that are being extracted.
-
-        The format of the tablesFile is as follows.
-
-        ```c++
-        database1.table1
-        database2.table2
-        database3.table3
-        ```
-
-        <ResponseField name="logFile" type="string" required>
-          logFile refers to the full path of the logfile where the extractor will write the logging information.
-
-          <ResponseField name="maxThreads" type="integer">
-            maxThreads is number of parallel threads that will run to extract data. One thread usually uses 1 cpu and there might be contention if number of threads are too high than the number of cpus.  If you're using a dedicated 32 CPU host for the extraction, we recommend using 32 for this number.
-
-            <ResponseField name="maxPages" type="integer">
-              maxPages is the maximum number of PostgreSQL storage pages to visit by a single extraction thread.  As pages have varying numbers of rows, this coresponds somewhat loosely to the number of rows to be extracted at a time.
-            </ResponseField>
-          </ResponseField>
-        </ResponseField>
-      </ResponseField>
-    </ResponseField>
-  </ResponseField>
 </ResponseField>
+      
+<ResponseField name="tablesFile" type="string" required>
+  tablesFile is a file with a list of all the tables that are being extracted.
+</ResponseField>
+  The format of the tablesFile is as follows.
+      
+```c++
+database1.table1
+database2.table2
+database3.table3
+```
+
+<ResponseField name="logFile" type="string" required>
+          logFile refers to the full path of the logfile where the extractor will write the logging information.
+</ResponseField>
+
+<ResponseField name="maxThreads" type="integer">
+            maxThreads is number of parallel threads that will run to extract data. One thread usually uses 1 cpu and there might be contention if number of threads are too high than the number of cpus.  If you're using a dedicated 32 CPU host for the extraction, we recommend using 32 for this number.
+</ResponseField>
+            
+<ResponseField name="maxPages" type="integer">
+              maxPages is the maximum number of PostgreSQL storage pages to visit by a single extraction thread.  As pages have varying numbers of rows, this coresponds somewhat loosely to the number of rows to be extracted at a time.
+</ResponseField>
+          
 
 <ResponseField name="hexEncoding" type="boolean" default="false">
   hexEncoding is used to specify whether string data will be extracted as hex.  The default is base64.  hexEncoding should only be used if you're loading to a target that doesn't handle base64, such as Snowflake.
-
-  ## Change Extractor
 </ResponseField>
+
+## Change Extractor
 
 Change Extractor is a wirekite utility that extracts ongoing changes to rows - Inserts, Updates, Deletes - for given tables. The Change Extractor can be run independently or run as part of the Orchestrator (check Orchestrator section). However you run it, the Change Extractor needs certain configuration variables, which will have the same values whether you run the Change Extractor directly or as part of a workflow using the Orchestrator.
 
