@@ -1,28 +1,27 @@
 ---
 title: "SQL Server"
 description: "This guide talks about what do you need to do to configure SQL Server to use Wirekite."
-icon: ""
 ---
 
-## Extractor Prereqs
+## Extractor Prerequisites
 
 To configure SQL Server as a wirekite extractor you must have the following prereqs met.
 
  1. Make sure that the database version is `2016` and above.
  2. Make sure that the database supports change data capture capability and change tables can be created.
- 3. Make sure change data capture is enabled. This can be done using `EXEC sys.sp_cdc_enable_db;` on the database level. To verify run `SELECT name, is_cdc_enabled FROM sys.databases WHERE name = 'database';` 
+ 3. Make sure change data capture is enabled. This can be done using `EXEC sys.sp_cdc_enable_db;` on the database level. To verify run `SELECT name, is_cdc_enabled FROM sys.databases WHERE name = 'database';`
  4. Make sure change data capture is enable for the tables you are monitoring. This can be done using `EXEC sys.sp_cdc_enable_table @source_schema = 'schema', @source_name = 'table', @role_name = NULL, @supports_net_changes = 1;`. We only need to enable net logging and not full logging. To verify run `SELECT name, is_tracked_by_cdc FROM sys.tables WHERE name = 'table';`
  5. To view the CDC configuration you can run `SELECT * FROM cdc.change_tables;`
  6. Make sure CLR is enabled. This can be done using `EXEC sp_configure 'show advanced options', 1;
-RECONFIGURE;
-EXEC sp_configure 'clr enabled', 1;
-RECONFIGURE;
-EXEC sp_configure 'clr enabled';`
+    RECONFIGURE;
+    EXEC sp_configure 'clr enabled', 1;
+    RECONFIGURE;
+    EXEC sp_configure 'clr enabled';`
  7. Make sure the changes are being capture by running `SELECT * FROM cdc.schema_table_CT;`
  8. Make sure that you configure a user for wirekite with full privileges on the tables that we are extracting.
  9. Wirekite will also create some internal tables(wirekite_progress and wirekite_action). Make sure wirekite user has read and write privileges to those tables.
- 10. Make sure that the user running wirekite has privileges to write to the directory where the wirekite output files will be generated. 
- 11. When doing a data extract make sure that replication is stopped.
+10. Make sure that the user running wirekite has privileges to write to the directory where the wirekite output files will be generated.
+11. When doing a data extract make sure that replication is stopped.
 12. It is highly preferable to run wirekite on a replica of production database, since wirekite can generate lot of load on the database server.
 
 ## Schema Extractor
@@ -37,7 +36,7 @@ Here are the configuration variables required to run schema extractor.
 
 The connection information has the following format
 
-```c++
+````c++
 sqlserver://userame:password@hostname:port?database=databasename&encrypt=disable&connection+timeout=timeoutinseconds```
 
 <ResponseField name="outputDirectory" type="string" required>
@@ -54,7 +53,7 @@ The format of the tablesFile is as follows.
 database1.table1
 database2.table2
 database3.table3
-```
+````
 
 <ResponseField name="logFile" type="string" required>
   logFile refers to the full path of the logfile where the extractor will write the logging information.
@@ -153,7 +152,7 @@ database3.table3
 </ResponseField>
 
 <ResponseField name="processCommits" type="boolean" default="false">
-  Whether to process begin and commoit statements or not. 
+  Whether to process begin and commoit statements or not.
 </ResponseField>
 
 <ResponseField name="eventsPerFlush" type="number" default="5000">

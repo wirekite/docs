@@ -1,22 +1,21 @@
 ---
 title: "Oracle"
 description: "This guide talks about what do you need to do to configure Oracle to use Wirekite."
-icon: ""
 ---
 
-## Extractor Prereqs
+## Extractor Prerequisites
 
 To configure Oracle as a wirekite extractor you must have the following prereqs met.
 
- 1. Make sure that the database version is `11.x` and above.
- 2. Make sure that the database supports log mining capability and v$logmnr_contents view is present and accessible.
- 3. Make sure archivelog mode is enabled.
- 4. Makre sure supplemental logging is enabled on the tables you are trying to extract. Minimal Supplemental Logging is enough. This can be achieved by running `ALTER DATABASE ADD SUPPLEMENTAL LOG DATA;`. There is no need to enable primary key supplemental logging  
- 5. Make sure that you configure a user for wirekite with full privileges on the tables that we are extracting as well as v$logmnr_contents. It is strongly preferred to create a separate user for wirekite. Wirekite should be able to run `EXECUTE DBMS_LOGMNR.ADD_LOGFILE`, `EXECUTE DBMS_LOGMNR.START_LOGMNR` and `EXECUTE DBMS_LOGMNR.END_LOGMNR`.
- 6. Wirekite will also create some internal tables(wirekite_progress and wirekite_action). Make sure wirekite user has read and write privileges to those tables.
- 7. Make sure that the user running wirekite has privileges to write to the directory where the wirekite output files will be generated. 
- 8. When doing a data extract make sure that replication is stopped and database is quiesced. This is to make sure that the dump is consistent to a given oracle SCN and all transactions have either committed or rolled back.
-10. It is highly preferable to run wirekite on a dataguard replica of production database, since wirekite can generate lot of load on the database server.
+1. Make sure that the database version is `11.x` and above.
+2. Make sure that the database supports log mining capability and v\$logmnr_contents view is present and accessible.
+3. Make sure archivelog mode is enabled.
+4. Makre sure supplemental logging is enabled on the tables you are trying to extract. Minimal Supplemental Logging is enough. This can be achieved by running `ALTER DATABASE ADD SUPPLEMENTAL LOG DATA;`. There is no need to enable primary key supplemental logging
+5. Make sure that you configure a user for wirekite with full privileges on the tables that we are extracting as well as v\$logmnr_contents. It is strongly preferred to create a separate user for wirekite. Wirekite should be able to run `EXECUTE DBMS_LOGMNR.ADD_LOGFILE`, `EXECUTE DBMS_LOGMNR.START_LOGMNR` and `EXECUTE DBMS_LOGMNR.END_LOGMNR`.
+6. Wirekite will also create some internal tables(wirekite_progress and wirekite_action). Make sure wirekite user has read and write privileges to those tables.
+7. Make sure that the user running wirekite has privileges to write to the directory where the wirekite output files will be generated.
+8. When doing a data extract make sure that replication is stopped and database is quiesced. This is to make sure that the dump is consistent to a given oracle SCN and all transactions have either committed or rolled back.
+9. It is highly preferable to run wirekite on a dataguard replica of production database, since wirekite can generate lot of load on the database server.
 
 ## Schema Extractor
 
@@ -30,7 +29,7 @@ Here are the configuration variables required to run schema extractor.
 
 The connection information has the following format
 
-```c++
+````c++
 username/password@hostname:port/service_name```
 
 <ResponseField name="outputDirectory" type="string" required>
@@ -47,7 +46,7 @@ The format of the tablesFile is as follows.
 database1.table1
 database2.table2
 database3.table3
-```
+````
 
 <ResponseField name="logFile" type="string" required>
   logFile refers to the full path of the logfile where the extractor will write the logging information.
@@ -142,7 +141,7 @@ database3.table3
 </ResponseField>
 
 <ResponseField name="processCommits" type="boolean" default="false">
-  Whether to process begin and commoit statements or not. 
+  Whether to process begin and commoit statements or not.
 </ResponseField>
 
 <ResponseField name="eventsPerFlush" type="number" default="5000">
@@ -160,11 +159,3 @@ database3.table3
 <ResponseField name="startScn" type="number" default="0">
   The system change number in the archivelogFile from where to start extracting changes. Generally this is the database scn position where the data extract was taken.
 </ResponseField>
-
-
-
-
-
-
-
-

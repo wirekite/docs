@@ -1,10 +1,9 @@
 ---
 title: "MySQL"
 description: "This guide talks about what do you need to do to configure MySQL to use Wirekite."
-icon: ""
 ---
 
-## Extractor Prereqs
+## Extractor Prerequisites
 
 To configure MySQL as an extractor you must have the following prereqs met.
 
@@ -144,7 +143,7 @@ database3.table3
 </ResponseField>
 
 <ResponseField name="processCommits" type="boolean" default="false">
-  Whether to process begin and commoit statements or not. 
+  Whether to process begin and commoit statements or not.
 </ResponseField>
 
 <ResponseField name="eventsPerFlush" type="number" default="5000">
@@ -162,11 +161,3 @@ database3.table3
 <ResponseField name="binlogPosition" type="number" default="0">
   The binlog position in the binlogFile from where to start extracting changes. Generally this is the mysql coordinates where the data extract was taken.
 </ResponseField>
-
-
-
-
-
-
-
-
