@@ -8,47 +8,48 @@ icon: ""
 
 The following table explains how the PostgreSQL datatypes are mapped to the target databases.
 
-| PostgreSQL           | Snowflake       |
-| :------------------- | :-------------- |
-| **Numbers**          |                 |
-| `SMALLINT`           | `NUMBER`        |
-| `INT`                | `INT`           |
-| `BIGINT`             | `BIGINT`        |
-| `NUMERIC`            | `NUMBER`        |
-|`FLOAT`               | `FLOAT`                |
-|`DOUBLE PRECISION`|`FLOAT`|
-| **Times**            |                 |
-| `DATE`               | `DATE`          |
-| `TIME`               | `TIME`          |
-| `TIMESTAMP`          | `TIMESTAMP_NTZ` |
-|`TIMESTAMP WITH TIME ZONE`|`TIMESTAMP_LTZ`|
-|`TIME WITH TIME ZONE`|`VARCHAR(32)`|
-|`INTERVAL`|`VARCHAR(64)`|
-| **Strings**          |                 |
-| `CHAR`               | `VARCHAR`       |
-| `VARCHAR`            | `VARCHAR`       |
-| `BPCHAR`            | `VARCHAR`       |
-| `TEXT`           | `VARCHAR`       |
-| **Blobs**            |                 |
-| `BIT`                | `BINARY`        |
-| `BOOL`                | `BOOLEAN`        |
-| `BYTEA`               | `BINARY`        |
-| `JSON`               | `VARCHAR`       |
-|`XML`|`VARCHAR`|
-| **Miscellaneous**             |                 |
-|`MONEY`|`NUMBER(16,2)`|
-|`CIDR`|`VARCHAR(64)`|
-|`INET`|`VARCHAR(64)`|
-|`MACADDR`|`VARCHAR(64)`|
-|`UUID`|`VARCHAR(64)`|
-|`TSVECTOR`|`VARCHAR(1024)`|
-|`TSQUERY`|`VARCHAR(256)`|
-|`ARR_<type>`|`VARCHAR(1024)`|
-|`POINT`|`VARCHAR(64)`|
-|`LINE`|`VARCHAR(64)`|
-|`LSEG`|`VARCHAR(64)`|
-|`BOX`|`VARCHAR(64)`|
-|`PATH`|`VARCHAR(64)`|
-|`POLYGON`|`VARCHAR(256)`|
-|`CIRCLE`|`VARCHAR(64)`|
-|`TXID_SNAPSHOT`|`VARCHAR(64)`|
+| Postgres Datatype | Firebolt Datatype | Snowflake Datatype |
+| ----------------- | ----------------- | ------------------ |
+| **Numbers** | | |
+| `SMALLINT` | `INTEGER` | `NUMBER` |
+| `INT` | `INTEGER` | `INT` |
+| `BIGINT` | `BIGINT` | `BIGINT` |
+| `NUMERIC` | `NUMERIC` | `NUMBER` |
+| `FLOAT` | `REAL` | `FLOAT` |
+| `REAL` | `REAL` | `FLOAT` |
+| `DOUBLE PRECISION` | `DOUBLE` | `FLOAT` |
+| `SMALLSERIAL` | `INTEGER` | `NUMBER` |
+| `SERIAL` | `INTEGER` | `INT` |
+| `BIGSERIAL` | `BIGINT` | `BIGINT` |
+| `MONEY` | `NUMERIC` | `NUMBER` |
+| `BOOLEAN` | `BOOLEAN` | `BOOLEAN` |
+| `OBJECT IDENTIFIER TYPES` | `INTEGER` | `INT` |
+| **Times** | | |
+| `TIMESTAMP` | `TIMESTAMP` | `TIMESTAMP` |
+| `TIMESTAMP WITH TIME ZONE` | `TIMESTAMPTZ` | `TIMESTAMP_TZ` |
+| `DATE` | `DATE` | `DATE` |
+| `TIME` | `TEXT` | `TIME` |
+| `TIME WITH TIME ZONE` | `TEXT` | `TIME` |
+| `INTERVAL` | `TEXT` | `VARCHAR` |
+| **Strings** | | |
+| `CHARACTER` | `TEXT` | `VARCHAR` |
+| `CHARACTER VARYING` | `TEXT` | `VARCHAR` |
+| `TEXT` | `TEXT` | `VARCHAR` |
+| `ENUM` | `TEXT` | `VARCHAR` |
+| `GEOMETRIC TYPES` | `TEXT` | `VARCHAR` |
+| `NETWORK ADDRESS TYPES` | `TEXT` | `VARCHAR` |
+| `BIT STRING TYPES` | `TEXT` | `VARCHAR` |
+| `TEXT SEARCH TYPES` | `TEXT` | `VARCHAR` |
+| `UUID` | `TEXT` | `VARCHAR` |
+| `XML` | `TEXT` | `VARCHAR` |
+| `JSON` | `TEXT` | `VARIANT` |
+| `JSONB` | `TEXT` | `VARIANT` |
+| `COMPOSITE TYPES` | `TEXT` | `VARCHAR` |
+| `RANGE TYPES` | `TEXT` | `VARCHAR` |
+| `DOMAIN TYPES` | `TEXT` | `VARCHAR` |
+| `PG_LSN TYPE` | `TEXT` | `VARCHAR` |
+| `PSEUDOTYPES` | `TEXT` | `VARCHAR` |
+| **Blobs** | | |
+| `BYTEA` | `BYTEA` | `BINARY` |
+| **Sets** | | |
+| `ARRAYS` | `ARRAY` | `ARRAY` |

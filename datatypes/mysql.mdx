@@ -8,47 +8,47 @@ icon: ""
 
 The following table explains how the MySQL datatypes are mapped to the target databases.
 
-| MySQL                | PostgreSQL                 | Snowflake       |
-| :------------------- | :------------------------- | :-------------- |
-| **Numbers**          |                            |                 |
-| `TINYINT`            | `SMALLINT`                 | `TINYINT`       |
-| `SMALLINT`           | `SMALLINT`                 | `NUMBER`        |
-| `MEDIUMINT`          | `INT`                      | `NUMBER`        |
-| `INT`                | `INT`                      | `INT`           |
-| `BIGINT`             | `BIGINT`                   | `BIGINT`        |
-| `DECIMAL`            | `NUMERIC`                  | `NUMBER`        |
-| `FLOAT`              | `FLOAT`                    | `FLOAT`         |
-| `DOUBLE`             | `DOUBLE PRECISION`         | `FLOAT`         |
-| **Numbers Unsigned** |                            |                 |
-| `TINYINT UNSIGNED`   | `SMALLINT`                 | `NUMBER`        |
-| `SMALLINT UNSIGNED`  | `INT`                      | `NUMBER`        |
-| `MEDIUMINT UNSIGNED` | `INT`                      | `NUMBER`        |
-| `INT UNSIGNED`       | `BIGINT`                   | `NUMBER`        |
-| `BIGINT UNSIGNED`    | `NUMERIC(21)`              | `NUMBER`        |
-| `DECIMAL UNSIGNED`   | `NUMERIC(N+1)`             | `NUMBER`        |
-| `FLOAT UNSIGNED`     | `DOUBLE PRECISION`         | `FLOAT`         |
-| `DOUBLE UNSIGNED`    | `N/A`                      | `N/A`           |
-| **Times**            |                            |                 |
-| `DATE`               | `DATE`                     | `DATE`          |
-| `TIME`               | `TIME`                     | `TIME`          |
-| `DATETIME`           | `TIMESTAMP`                | `TIMESTAMP_NTZ` |
-| `TIMESTAMP`          | `TIMESTAMP WITH TIME ZONE` | `TIMESTAMP_LTZ` |
-| `YEAR`               | `SMALLINT`                 | `INT`           |
-| **Strings**          |                            |                 |
-| `CHAR`               | `CHAR`                     | `VARCHAR`       |
-| `VARCHAR`            | `VARCHAR`                  | `VARCHAR`       |
-| `TINYTEXT`           | `TEXT`                     | `VARCHAR`       |
-| `MEDIUMTEXT`         | `TEXT`                     | `VARCHAR`       |
-| `TEXT`               | `TEXT`                     | `VARCHAR`       |
-| `LONGTEXT`           | `TEXT`                     | `VARCHAR`       |
-| **Blobs**            |                            |                 |
-| `BIT`                | `BIT`                      | `BINARY`        |
-| `BINARY`             | `BYTEA`                    | `BINARY`        |
-| `VARBINARY`          | `BYTEA`                    | `BINARY`        |
-| `TINYBLOB`           | `BYTEA`                    | `BINARY`        |
-| `MEDIUMBLOB`         | `BYTEA`                    | `BINARY`        |
-| `BLOB`               | `BYTEA`                    | `BINARY`        |
-| `JSON`               | `JSON`                     | `VARCHAR`       |
-| **Sets**             |                            |                 |
-| `ENUM`               | `VARCHAR(64)`              | `VARCHAR(64)`   |
-| `SET`                | `VARCHAR(64)`              | `VARCHAR(64)`   |
+| MySQL Datatype | Firebolt Datatype | Snowflake Datatype |
+| -------------- | ----------------- | ------------------ |
+| **Numbers** | | |
+| `TINYINT` | `INTEGER` | `TINYINT` |
+| `SMALLINT` | `INTEGER` | `NUMBER` |
+| `MEDIUMINT` | `INTEGER` | `NUMBER` |
+| `INT` | `INTEGER` | `INT` |
+| `BIGINT` | `BIGINT` | `BIGINT` |
+| `NUMERIC` | `NUMERIC` | `NUMBER` |
+| `DECIMAL` | `NUMERIC` | `NUMBER` |
+| `FLOAT` | `REAL` | `FLOAT` |
+| `DOUBLE` | `DOUBLE` | `FLOAT` |
+| `REAL` | `DOUBLE` | `FLOAT` |
+| `BIT` | `INTEGER` | `BOOLEAN` |
+| `BOOL` | `BOOLEAN` | `BOOLEAN` |
+| `BOOLEAN` | `BOOLEAN` | `BOOLEAN` |
+| `YEAR` | `INTEGER` | `NUMBER` |
+| **Times** | | |
+| `DATE` | `DATE` | `DATE` |
+| `DATETIME` | `TIMESTAMP` | `TIMESTAMP` |
+| `TIMESTAMP` | `TIMESTAMP` | `TIMESTAMP` |
+| `TIME` | `TEXT` | `TIME` |
+| **Strings** | | |
+| `CHAR` | `TEXT` | `VARCHAR` |
+| `VARCHAR` | `TEXT` | `VARCHAR` |
+| `TINYTEXT` | `TEXT` | `VARCHAR` |
+| `TEXT` | `TEXT` | `VARCHAR` |
+| `MEDIUMTEXT` | `TEXT` | `VARCHAR` |
+| `LONGTEXT` | `TEXT` | `VARCHAR` |
+| `ENUM` | `TEXT` | `VARCHAR` |
+| `SET` | `TEXT` | `VARCHAR` |
+| `JSON` | `TEXT` | `VARIANT` |
+| `POINT` | `TEXT` | `VARCHAR` |
+| `LINESTRING` | `TEXT` | `VARCHAR` |
+| `POLYGON` | `TEXT` | `VARCHAR` |
+| `GEOMETRY` | `TEXT` | `VARCHAR` |
+| `MULTIPOINT` | `TEXT` | `VARCHAR` |
+| **Blobs** | | |
+| `BINARY` | `BYTEA` | `BINARY` |
+| `VARBINARY` | `BYTEA` | `BINARY` |
+| `TINYBLOB` | `BYTEA` | `BINARY` |
+| `BLOB` | `BYTEA` | `BINARY` |
+| `MEDIUMBLOB` | `BYTEA` | `BINARY` |
+| `LONGBLOB` | `BYTEA` | `BINARY` |

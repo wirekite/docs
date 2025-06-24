@@ -1,5 +1,36 @@
 ---
 title: 'SQL Server'
-description: 'Datatype Matrix.'
+description: 'This page explains how data types are mapped from a source SQL Server database to the target databases. Please visit the [SQL Server Data Types Documentation](https://learn.microsoft.com/en-us/sql/t-sql/data-types/data-types-transact-sql?view=sql-server-ver17) to get a primer on the various SQL Server datatypes.'
 ---
 
+| SQL Server Datatype | Firebolt Datatype | Snowflake Datatype |
+| -------------- | ----------------- | ------------------ |
+| **Numbers** | | |
+| `TINYINT` | `INTEGER` | `TINYINT` |
+| `SMALLINT` | `INTEGER` | `NUMBER` |
+| `INT` | `INTEGER` | `INT` |
+| `BIGINT` | `BIGINT` | `BIGINT` |
+| `NUMERIC` | `NUMERIC` | `NUMBER` |
+| `DECIMAL` | `NUMERIC` | `NUMBER` |
+| `SMALLMONEY` | `NUMERIC` | `NUMBER` |
+| `MONEY` | `NUMERIC` | `NUMBER` |
+| `FLOAT` | `DOUBLE` | `FLOAT` |
+| `REAL` | `REAL` | `FLOAT` |
+| `BIT` | `BOOLEAN` | `BOOLEAN` |
+| **Times** | | |
+| `DATE` | `DATE` | `DATE` |
+| `TIME` | `TEXT` | `TIME` |
+| `DATETIME` | `TIMESTAMP` | `TIMESTAMP` |
+| `DATETIME2` | `TIMESTAMP` | `TIMESTAMP` |
+| `DATETIMEOFFSET` | `TIMESTAMPTZ` | `TIMESTAMP_TZ` |
+| **Strings** | | |
+| `CHAR` | `TEXT` | `VARCHAR` |
+| `VARCHAR` | `TEXT` | `VARCHAR` |
+| `TEXT` | `TEXT` | `VARCHAR` |
+| `NCHAR` | `TEXT` | `VARCHAR` |
+| `NVARCHAR` | `TEXT` | `VARCHAR` |
+| `NTEXT` | `TEXT` | `VARCHAR` |
+| **Blobs** | | |
+| `BINARY` | `BYTEA` | `BINARY` |
+| `VARBINARY` | `BYTEA` | `BINARY` |
+| `IMAGE` | `BYTEA` | `BINARY` |
