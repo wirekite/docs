@@ -37,8 +37,9 @@ Here are the configuration variables required to run schema extractor.
 The connection information has the following format
 
 ```shellscript
-sqlserver://userame:password@hostname:port?database=databasename&encrypt=disable&connection+timeout=timeoutinseconds
+sqlserver://userame:password@host:port?database=databasename&encrypt=disable&connection+timeout=timeoutinseconds
 ```
+
 <ResponseField name="outputDirectory" type="string" required>
   outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write a file called wirekite_schema.skt in the outputDirectory.
 </ResponseField>
@@ -49,7 +50,7 @@ sqlserver://userame:password@hostname:port?database=databasename&encrypt=disable
 
 The format of the tablesFile is as follows.
 
-```c++
+```shellscript
 database1.table1
 database2.table2
 database3.table3
@@ -70,7 +71,7 @@ Data extractor is a wirekite utility that extracts the data for given tables. Th
 The connection information has the following format
 
 ```shellscript
-sqlserver://userame:password@hostname:port?database=databasename&encrypt=disable&connection+timeout=timeoutinseconds
+sqlserver://userame:password@host:port?database=databasename&encrypt=disable&connection+timeout=timeoutinseconds
 ```
 
 <ResponseField name="outputDirectory" type="string" required>
@@ -120,7 +121,7 @@ Change extractor is a wirekite utility that extracts ongoing changes - Inserts, 
 The connection information has the following format
 
 ```shellscript
-sqlserver://userame:password@hostname:port?database=databasename&encrypt=disable&connection+timeout=timeoutinseconds
+sqlserver://userame:password@host:port?database=databasename&encrypt=disable&connection+timeout=timeoutinseconds
 ```
 
 <ResponseField name="outputDirectory" type="string" required>

@@ -29,8 +29,8 @@ Here are the configuration variables required to run schema extractor.
 
 The connection information has the following format
 
-```c++
-username/password@hostname:port/service_name
+```shellscript
+username/password@host:port/service_name
 ```
 
 <ResponseField name="outputDirectory" type="string" required>
@@ -43,7 +43,7 @@ username/password@hostname:port/service_name
 
 The format of the tablesFile is as follows.
 
-```c++
+```shellscript
 database1.table1
 database2.table2
 database3.table3
@@ -64,7 +64,7 @@ Data extractor is a wirekite utility that extracts the data for given tables. Th
 The connection information has the following format
 
 ```shellscript
-username/password@hostname:port/service_name
+username/password@host:port/service_name
 ```
 
 <ResponseField name="outputDirectory" type="string" required>
@@ -110,7 +110,7 @@ Change extractor is a wirekite utility that extracts ongoing changes - Inserts, 
 The connection information has the following format
 
 ```shellscript
-username/password@hostname:port/service_name
+username/password@host:port/service_name
 ```
 
 <ResponseField name="outputDirectory" type="string" required>
