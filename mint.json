@@ -65,14 +65,19 @@
       ]
     },
     {
-      "group": "Guides",
+      "group": "Source Guides",
       "pages": [
-        "guides/mysql",
-        "guides/postgres",
-        "guides/oracle",
-        "guides/sqlserver",
-        "guides/snowflake",
-        "guides/firebolt"
+        "sourceguides/mysql",
+        "sourceguides/postgres",
+        "sourceguides/oracle",
+        "sourceguides/sqlserver"
+      ]
+    },
+    {
+      "group": "Target Guides",
+      "pages": [
+        "targetguides/snowflake",
+        "targetguides/firebolt"
       ]
     },
     {
