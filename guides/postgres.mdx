@@ -1,0 +1,164 @@
+---
+title: "PostgreSQL"
+description: "This guide talks about what do you need to do to configure Postgres to use Wirekite."
+icon: "code"
+---
+
+## Extractor Prereqs
+
+To configure Postgres as an extractor you must have the following prereqs met.
+
+ 1. Make sure that the database version is `5.x` and above.
+ 2. Make sure the tables being extracted are InnoDB tables.
+ 3. Make sure binlogging is enabled and format is ROW. `binlog_format = ROW`
+ 4. Also make sure that `binlog_row_image` is set to appropriate value. Wirekite does not mandate any particular value, as long as the data that you are trying to extract is logged.
+ 5. Make sure that you configure a user for wirekite with full privileges on the tables that we are extracting. It is strongly preferred to create a separate user for wirekite.
+ 6. Wirekite will also create some internal tables(wirekite_progress and wirekite_action). Make sure wirekite user has read and write privileges to those tables.
+ 7. Make sure that MySQL has privileges to write to the directory where the wirekite output files will be generated. This can be configured by setting appropriate value for `secure_file_priv`.
+ 9. When doing a data extract make sure that replication is stopped. This is to make sure that the dump is consistent to given mysql coordinate position.
+10. It is highly preferable to run wirekite on a slave of production database, since wirekite can generate lot of load on the database server.
+
+## Schema Extractor
+
+Schema extractor is a wirekite utility that extracts the schema related information for given tables. The schema extractor can be run independently or run as part of orchestrator (check orchestrator section). However you run it, the schema extractor needs certain configuration variables, which will have the same configurations whether you run it using schema extractor or orchestrator.
+
+Here are the configuration variables required to run schema extractor.
+
+<ResponseField name="dsnFile" type="string" required>
+  dsnFile is the file containing the connection information for the database.
+</ResponseField>
+
+The connection information has the following format
+
+```c++
+postgres://username:password@host:port/database
+```
+
+<ResponseField name="outputDirectory" type="string" required>
+  outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write a file called wirekite_schema.skt in the outputDirectory.
+</ResponseField>
+
+<ResponseField name="tablesFile" type="string" required>
+  tablesFile is a file with a list of all the tables that are being extracted.
+</ResponseField>
+
+The format of the tablesFile is as follows.
+
+```c++
+database1.table1
+database2.table2
+database3.table3
+```
+
+<ResponseField name="logFile" type="string" required>
+  logFile refers to the full path of the logfile where the extractor will write the logging information.
+</ResponseField>
+
+## Data Extractor
+
+Data extractor is a wirekite utility that extracts the data for given tables. The data extractor can be run independently or run as part of orchestrator (check orchestrator section). However you run it, the data extractor needs certain configuration variables, which will have the same configurations whether you run it using data extractor or orchestrator.
+
+<ResponseField name="dsnFile" type="string" required>
+  dsnFile is the file containing the connection information for the mysql database.
+</ResponseField>
+
+The connection information has the following format
+
+```c++
+postgres://username:password@host:port/database
+```
+
+<ResponseField name="outputDirectory" type="string" required>
+  outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write files called table_name.number.dkt in the outputDirectory.
+</ResponseField>
+
+<ResponseField name="tablesFile" type="string" required>
+  tablesFile is a file with a list of all the tables that are being extracted.
+</ResponseField>
+
+The format of the tablesFile is as follows.
+
+```c++
+database1.table1
+database2.table2
+database3.table3
+```
+
+<ResponseField name="logFile" type="string" required>
+  logFile refers to the full path of the logfile where the extractor will write the logging information.
+</ResponseField>
+
+<ResponseField name="maxThreads" type="number" default="5">
+  The number of parallel threads that will run at the same time to extract data. One thread usually uses 1 cpu and there might be contention if number of threads are too high than the number of cpus.
+</ResponseField>
+
+<ResponseField name="maxPages" type="number" default="25000">
+  Maximum number of pages to visit in one select.
+</ResponseField>
+
+<ResponseField name="maxRowsPerDump" type="number" default="200000">
+  The number of rows written to one dump file.
+</ResponseField>
+
+<ResponseField name="hexEncoding" type="boolean" default="false">
+  Whether to extract string data as hex or base 64.
+</ResponseField>
+
+## Change Extractor
+
+Change extractor is a wirekite utility that extracts ongoing changes - Inserts, Updates, Deletes - for given tables. The change extractor can be run independently or run as part of orchestrator (check orchestrator section). However you run it, the change extractor needs certain configuration variables, which will have the same configurations whether you run it using change extractor or orchestrator.
+
+<ResponseField name="dsnFile" type="string" required>
+  dsnFile is the file containing the connection information for the mysql database.
+</ResponseField>
+
+The connection information has the following format
+
+```c++
+postgres://username:password@host:port/database
+```
+
+<ResponseField name="outputDirectory" type="string" required>
+  outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write files called number.ckt in the outputDirectory. The number will be an ever increasing number starting from 0.
+</ResponseField>
+
+<ResponseField name="tablesFile" type="string" required>
+  tablesFile is a file with a list of all the tables that are being extracted.
+</ResponseField>
+
+The format of the tablesFile is as follows.
+
+```c++
+database1.table1
+database2.table2
+database3.table3
+```
+
+<ResponseField name="logFile" type="string" required>
+  logFile refers to the full path of the logfile where the extractor will write the logging information.
+</ResponseField>
+
+<ResponseField name="processCommits" type="boolean" default="false">
+  Whether to process begin and commoit statements or not. 
+</ResponseField>
+
+<ResponseField name="eventsPerFlush" type="number" default="5000">
+  The number of events at which wirekite will flush the buffer to the file. This is to ensure the regular flushing to the output files occur for performance reasons.
+</ResponseField>
+
+<ResponseField name="exitWhenIdle" type="boolean" default="false">
+  Whether to exit when all the binlogs have been processed, or wait for new binlogs to show up.
+</ResponseField>
+
+<ResponseField name="replicationSlot" type="string" required>
+  The replication slot from where to start extracting changes. Generally this is the position where the data extract was taken. 
+</ResponseField>
+
+
+
+
+
+
+
+
+
