@@ -1,5 +1,57 @@
 ---
-title: 'New file'
-description: 'Description of your new file.'
+title: "Execution"
+description: "This page talks about how to execute Wirekite."
 ---
 
+## Orchestrator
+
+Wirekite has a main binary called the orchestrator. The actual binary is called wirekite. This is a top level binary which calls all the other binaries to execute the task of data movement. Note that other binaries can be called independently also for testing purposes.
+
+## Orchestrator Configuration File
+
+Orchestrator takes a configuration file to understand what needs to be done. The configuration file has the following rules.
+
+1. The configuration variables can be represented using the format `variable=value`.
+2. Empty lines are allowed.
+3. Comments are allowed. To comment just start the line with #.
+4. Multilevel variables are allowed using the format `parent.child=value`.
+
+## Variables
+
+The confguratio file has the following variables and allowed values to determine what needs to be done.
+
+<ResponseField name="source" type="string">
+  source is the database type from which we are extracting. The possible values are
+
+  1. mysql
+  2. oracle
+  3. postgres
+  4. sqlserver
+</ResponseField>
+
+<ResponseField name="target" type="string">
+  target is the database type to which we are loading. The possible values are
+
+  1. snowflake
+  2. firebolt
+  3. postgres
+  4. mysql
+</ResponseField>
+
+<ResponseField name="mode" type="string">
+  mode defines what exactly are you moving from the source to the target. The possible values are
+
+  1. schema
+  2. data
+  3. change
+</ResponseField>
+
+Schema means that we are extracting the schema of the source database. Note that the schema is not automatically executed on the target database. This is done manually because we probably want to make some granular changes to the schema properties on the target database.
+
+Data means we are extracting data from the source database and loading on the target database. This is done automatically by the orchestrator.
+
+Change means that we are extracting changes -- Inserts, Updates , Deletes , Begins, Commits -- from the source database to the target database. This is done automatically by the orchestrator. Orchestrator can run infinitely continuously updating data in the target from the source. 
+
+## Child Variables
+
+Both `source` and `target` variables can have child variables.
