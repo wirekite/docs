@@ -117,11 +117,11 @@ postgres://username:password@host:port/database
 ```
 
 <ResponseField name="outputDirectory" type="string" required>
-  outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write files called number.ckt in the outputDirectory. The number will be an ever increasing number starting from 0.
+  outputDirectory is the directory to which wirekite will write the output files. The path should be absolute and writable by the operating-system user executing the wirekite binaries. Wirekite will write files called number.ckt in the outputDirectory. The number will be an ever increasing number starting from 0.
 </ResponseField>
 
 <ResponseField name="tablesFile" type="string" required>
-  tablesFile is a file with a list of all the tables that are being extracted.
+  tablesFile is a file with a list of all the tables whose changes are being extracted.
 </ResponseField>
 
 The format of the tablesFile is as follows.
@@ -137,7 +137,7 @@ database3.table3
 </ResponseField>
 
 <ResponseField name="processCommits" type="boolean" default="false">
-  Whether to output syntax marking BEGIN and COMMIT or not.  We guarantee that a single output file will completely contain all transactions and that no transactions will "span" output files.
+  Whether to output syntax marking BEGIN and COMMIT or not.  We guarantee that a single output file will completely contain its transactions and that no transactions will "span" output files.
 </ResponseField>
 
 <ResponseField name="eventsPerFlush" type="number" default="5000">
