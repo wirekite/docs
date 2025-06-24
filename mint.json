@@ -60,6 +60,7 @@
       "pages": [
         "datatypes/mysql",
         "datatypes/postgres",
+        "datatypes/oracle",
         "datatypes/oracle"
       ]
     },
@@ -69,7 +70,7 @@
         "guides/mysql",
         "guides/postgres",
         "guides/oracle",
-        "guides/snowflake"
+        "guides/sqlserver"
       ]
     }    
   ],
