@@ -56,13 +56,6 @@
       ]
     },
     {
-      "group": "Running Wirekite",
-      "pages": [
-        "run/installation",
-        "run/execution"
-      ]
-    },
-    {
       "group": "Datatype Matrices",
       "pages": [
         "datatypes/mysql",
@@ -81,7 +74,14 @@
         "guides/snowflake",
         "guides/firebolt"
       ]
-    }    
+    },
+    {
+      "group": "Running Wirekite",
+      "pages": [
+        "run/installation",
+        "run/execution"
+      ]
+    }
   ],
   "footerSocials": {
     "x": "https://x.com/mintlify",
