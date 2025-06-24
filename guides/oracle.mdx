@@ -29,8 +29,9 @@ Here are the configuration variables required to run schema extractor.
 
 The connection information has the following format
 
-````c++
-username/password@hostname:port/service_name```
+```c++
+username/password@hostname:port/service_name
+```
 
 <ResponseField name="outputDirectory" type="string" required>
   outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write a file called wirekite_schema.skt in the outputDirectory.
@@ -46,7 +47,7 @@ The format of the tablesFile is as follows.
 database1.table1
 database2.table2
 database3.table3
-````
+```
 
 <ResponseField name="logFile" type="string" required>
   logFile refers to the full path of the logfile where the extractor will write the logging information.
@@ -62,7 +63,7 @@ Data extractor is a wirekite utility that extracts the data for given tables. Th
 
 The connection information has the following format
 
-```c++
+```shellscript
 username/password@hostname:port/service_name
 ```
 
@@ -76,7 +77,7 @@ username/password@hostname:port/service_name
 
 The format of the tablesFile is as follows.
 
-```c++
+```shellscript
 database1.table1
 database2.table2
 database3.table3
@@ -108,7 +109,7 @@ Change extractor is a wirekite utility that extracts ongoing changes - Inserts, 
 
 The connection information has the following format
 
-```c++
+```shellscript
 username/password@hostname:port/service_name
 ```
 
@@ -122,7 +123,7 @@ username/password@hostname:port/service_name
 
 The format of the tablesFile is as follows.
 
-```c++
+```shellscript
 database1.table1
 database2.table2
 database3.table3
