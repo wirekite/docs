@@ -1,88 +1,170 @@
 ---
-title: 'Oracle'
-description: 'Text, title, and styling in standard markdown'
-icon: 'text-size'
+title: "Oracle"
+description: "This guide talks about what do you need to do to configure Oracle to use Wirekite."
+icon: "code"
 ---
 
-## Titles
+## Extractor Prereqs
 
-Best used for section headers.
+To configure Oracle as a wirekite extractor you must have the following prereqs met.
 
-```md
-## Titles
+ 1. Make sure that the database version is `11.x` and above.
+ 2. Make sure that the database supports log mining capability and v$logmnr_contents view is present and accessible.
+ 3. Make sure archivelog mode is enabled.
+ 4. Makre sure supplemental logging is enabled on the tables you are trying to extract. Minimal Supplemental Logging is enough. This can be achieved by running `ALTER DATABASE ADD SUPPLEMENTAL LOG DATA;`. There is no need to enable primary key supplemental logging  
+ 5. Make sure that you configure a user for wirekite with full privileges on the tables that we are extracting as well as v$logmnr_contents. It is strongly preferred to create a separate user for wirekite. Wirekite should be able to run `EXECUTE DBMS_LOGMNR.ADD_LOGFILE`, `EXECUTE DBMS_LOGMNR.START_LOGMNR` and `EXECUTE DBMS_LOGMNR.END_LOGMNR`.
+ 6. Wirekite will also create some internal tables(wirekite_progress and wirekite_action). Make sure wirekite user has read and write privileges to those tables.
+ 7. Make sure that the user running wirekite has privileges to write to the directory where the wirekite output files will be generated. 
+ 8. When doing a data extract make sure that replication is stopped and database is quiesced. This is to make sure that the dump is consistent to a given oracle SCN and all transactions have either committed or rolled back.
+10. It is highly preferable to run wirekite on a dataguard replica of production database, since wirekite can generate lot of load on the database server.
+
+## Schema Extractor
+
+Schema extractor is a wirekite utility that extracts the schema related information for given tables. The schema extractor can be run independently or run as part of orchestrator (check orchestrator section). However you run it, the schema extractor needs certain configuration variables, which will have the same configurations whether you run it using schema extractor or orchestrator.
+
+Here are the configuration variables required to run schema extractor.
+
+<ResponseField name="dsnFile" type="string" required>
+  dsnFile is the file containing the connection information for the database.
+</ResponseField>
+
+The connection information has the following format
+
+```c++
+username/password@hostname:port/service_name```
+
+<ResponseField name="outputDirectory" type="string" required>
+  outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write a file called wirekite_schema.skt in the outputDirectory.
+</ResponseField>
+
+<ResponseField name="tablesFile" type="string" required>
+  tablesFile is a file with a list of all the tables that are being extracted.
+</ResponseField>
+
+The format of the tablesFile is as follows.
+
+```c++
+database1.table1
+database2.table2
+database3.table3
 ```
 
-### Subtitles
+<ResponseField name="logFile" type="string" required>
+  logFile refers to the full path of the logfile where the extractor will write the logging information.
+</ResponseField>
 
-Best use to subsection headers.
+## Data Extractor
 
-```md
-### Subtitles
+Data extractor is a wirekite utility that extracts the data for given tables. The data extractor can be run independently or run as part of orchestrator (check orchestrator section). However you run it, the data extractor needs certain configuration variables, which will have the same configurations whether you run it using data extractor or orchestrator.
+
+<ResponseField name="dsnFile" type="string" required>
+  dsnFile is the file containing the connection information for the database.
+</ResponseField>
+
+The connection information has the following format
+
+```c++
+username/password@hostname:port/service_name
 ```
 
-<Tip>
+<ResponseField name="outputDirectory" type="string" required>
+  outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write files called table_name.number.dkt in the outputDirectory.
+</ResponseField>
 
-Each **title** and **subtitle** creates an anchor and also shows up on the table of contents on the right.
+<ResponseField name="tablesFile" type="string" required>
+  tablesFile is a file with a list of all the tables that are being extracted.
+</ResponseField>
 
-</Tip>
+The format of the tablesFile is as follows.
 
-## Text Formatting
-
-We support most markdown formatting. Simply add `**`, `_`, or `~` around text to format it.
-
-| Style         | How to write it   | Result          |
-| ------------- | ----------------- | --------------- |
-| Bold          | `**bold**`        | **bold**        |
-| Italic        | `_italic_`        | _italic_        |
-| Strikethrough | `~strikethrough~` | ~strikethrough~ |
-
-You can combine these. For example, write `**_bold and italic_**` to get **_bold and italic_** text.
-
-You need to use HTML to write superscript and subscript text. That is, add `<sup>` or `<sub>` around your text.
-
-| Text Size   | How to write it          | Result                 |
-| ----------- | ------------------------ | ---------------------- |
-| Superscript | `<sup>superscript</sup>` | <sup>superscript</sup> |
-| Subscript   | `<sub>subscript</sub>`   | <sub>subscript</sub>   |
-
-## Linking to Pages
-
-You can add a link by wrapping text in `[]()`. You would write `[link to google](https://google.com)` to [link to google](https://google.com).
-
-Links to pages in your docs need to be root-relative. Basically, you should include the entire folder path. For example, `[link to text](/writing-content/text)` links to the page "Text" in our components section.
-
-Relative links like `[link to text](../text)` will open slower because we cannot optimize them as easily.
-
-## Blockquotes
-
-### Singleline
-
-To create a blockquote, add a `>` in front of a paragraph.
-
-> Dorothy followed her through many of the beautiful rooms in her castle.
-
-```md
-> Dorothy followed her through many of the beautiful rooms in her castle.
+```c++
+database1.table1
+database2.table2
+database3.table3
 ```
 
-### Multiline
+<ResponseField name="logFile" type="string" required>
+  logFile refers to the full path of the logfile where the extractor will write the logging information.
+</ResponseField>
 
-> Dorothy followed her through many of the beautiful rooms in her castle.
->
-> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
+<ResponseField name="maxThreads" type="number" default="5">
+  The number of parallel threads that will run at the same time to extract data. One thread usually uses 1 cpu and there might be contention if number of threads are too high than the number of cpus.
+</ResponseField>
 
-```md
-> Dorothy followed her through many of the beautiful rooms in her castle.
->
-> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
+<ResponseField name="maxRowsPerDump" type="number" default="200000">
+  The number of rows written to one dump file.
+</ResponseField>
+
+<ResponseField name="hexEncoding" type="boolean" default="false">
+  Whether to extract string data as hex or base 64.
+</ResponseField>
+
+## Change Extractor
+
+Change extractor is a wirekite utility that extracts ongoing changes - Inserts, Updates, Deletes - for given tables. The change extractor can be run independently or run as part of orchestrator (check orchestrator section). However you run it, the change extractor needs certain configuration variables, which will have the same configurations whether you run it using change extractor or orchestrator.
+
+<ResponseField name="dsnFile" type="string" required>
+  dsnFile is the file containing the connection information for the database.
+</ResponseField>
+
+The connection information has the following format
+
+```c++
+username/password@hostname:port/service_name
 ```
 
-### LaTeX
+<ResponseField name="outputDirectory" type="string" required>
+  outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write files called number.ckt in the outputDirectory. The number will be an ever increasing number starting from 0.
+</ResponseField>
 
-Mintlify supports [LaTeX](https://www.latex-project.org) through the Latex component.
+<ResponseField name="tablesFile" type="string" required>
+  tablesFile is a file with a list of all the tables that are being extracted.
+</ResponseField>
 
-<Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
+The format of the tablesFile is as follows.
 
-```md
-<Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
+```c++
+database1.table1
+database2.table2
+database3.table3
 ```
+
+<ResponseField name="logFile" type="string" required>
+  logFile refers to the full path of the logfile where the extractor will write the logging information.
+</ResponseField>
+
+<ResponseField name="verbose" type="boolean" default="false">
+  Whether to generate verbose output. in verbose mode the change extractor can generate extra file called metdata which can help you troubleshoot any issue.
+</ResponseField>
+
+<ResponseField name="processOneArchivelog" type="boolean" default="false">
+  Whether to process one archivelog and exit or continue processing more archivelogs. This can be used for testing, before enabling extractor to process archivelogs infinitely.
+</ResponseField>
+
+<ResponseField name="processCommits" type="boolean" default="false">
+  Whether to process begin and commoit statements or not. 
+</ResponseField>
+
+<ResponseField name="eventsPerFlush" type="number" default="5000">
+  The number of events at which wirekite will flush the buffer to the file. This is to ensure the regular flushing to the output files occur for performance reasons.
+</ResponseField>
+
+<ResponseField name="exitWhenIdle" type="boolean" default="false">
+  Whether to exit when all the archive logs have been processed, or wait for new archive logs to show up.
+</ResponseField>
+
+<ResponseField name="archiveLogFile" type="string" required>
+  The archive log file from where to start extracting changes. Generally this is the database scn position where the data extract was taken. This needs to be the full path of the archivelog.
+</ResponseField>
+
+<ResponseField name="startScn" type="number" default="0">
+  The system change number in the archivelogFile from where to start extracting changes. Generally this is the database scn position where the data extract was taken.
+</ResponseField>
+
+
+
+
+
+
+
+

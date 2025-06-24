@@ -1,6 +1,6 @@
 ---
-title: "MySQL Wirekite Configuration"
-description: "This guide talks about what do you need to do to configure MySQL to use with Wirekite."
+title: "MySQL"
+description: "This guide talks about what do you need to do to configure MySQL to use Wirekite."
 icon: "code"
 ---
 
@@ -32,7 +32,7 @@ Here are the configuration variables required to run schema extractor.
 The connection information has the following format
 
 ```c++
-gkemnitz:gjk123@tcp(localhost:3306)/public?multiStatements=true&loc=Local
+username:password@tcp(localhost:port)/public?multiStatements=true&loc=Local
 ```
 
 <ResponseField name="outputDirectory" type="string" required>
@@ -66,7 +66,7 @@ Data extractor is a wirekite utility that extracts the data for given tables. Th
 The connection information has the following format
 
 ```c++
-gkemnitz:gjk123@tcp(localhost:3306)/public?multiStatements=true&loc=Local
+username:password@tcp(localhost:port)/public?multiStatements=true&loc=Local
 ```
 
 <ResponseField name="outputDirectory" type="string" required>
@@ -112,7 +112,7 @@ Change extractor is a wirekite utility that extracts ongoing changes - Inserts, 
 The connection information has the following format
 
 ```c++
-gkemnitz:gjk123@tcp(localhost:3306)/public?multiStatements=true&loc=Local
+username:password@tcp(localhost:port)/public?multiStatements=true&loc=Local
 ```
 
 <ResponseField name="outputDirectory" type="string" required>
@@ -140,7 +140,7 @@ database3.table3
 </ResponseField>
 
 <ResponseField name="processOneBinlog" type="boolean" default="false">
-  Whether to process one binlog and exit or continue processing more binlogs. This can be used for testing, before enabling extractor infinitely.
+  Whether to process one binlog and exit or continue processing more binlogs. This can be used for testing, before enabling extractor to process binlogs infinitely.
 </ResponseField>
 
 <ResponseField name="processCommits" type="boolean" default="false">
