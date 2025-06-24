@@ -18,7 +18,7 @@ Orchestrator takes a configuration file to understand what needs to be done. The
 
 ## Variables
 
-The confguratio file has the following variables and allowed values to determine what needs to be done.
+The confguration file has the following variables and allowed values to determine what needs to be done.
 
 <ResponseField name="source" type="string">
   source is the database type from which we are extracting. The possible values are
@@ -50,8 +50,67 @@ Schema means that we are extracting the schema of the source database. Note that
 
 Data means we are extracting data from the source database and loading on the target database. This is done automatically by the orchestrator.
 
-Change means that we are extracting changes -- Inserts, Updates , Deletes , Begins, Commits -- from the source database to the target database. This is done automatically by the orchestrator. Orchestrator can run infinitely continuously updating data in the target from the source. 
+Change means that we are extracting changes -- Inserts, Updates , Deletes , Begins, Commits -- from the source database to the target database. This is done automatically by the orchestrator. Orchestrator can run infinitely continuously updating data in the target from the source.
 
-## Child Variables
+## Source Child Variables
 
-Both `source` and `target` variables can have child variables.
+Both `source` and `target` variables can have child variables. The child variables are always represented as `source.variable=value`. The child variables can vary depending upon what is the source.
+
+For example if the source=mysql then the child variables can be any of the variables listed in [mysql variables](/guides/mysql) but if the source is oracle then the variables need to be [oracle variables](/guides/oracle).
+
+## Target Child Variables
+
+Just like source can have child variables target can also have child variables. And similarly the target child variables depends upon the target.
+
+For example if the target=snowflake then the child variables can be any of the variables listed in [snowflake variables](/guides/snowflake).
+
+However target child variables have a slightly more expanded syntax. Target usually has two components -- a loader and a mover. A loader essentially loads the files on to the target database while a mover actually moves the files from source to the target. Both loader and mover can take configuration variables specific to them.
+
+To distinguish between the variables for loader and mover the syntax that we use is `target.loader.variable=value` and `target.mover.variable=value`.
+
+For example the if the target= firebolt you can see both loader and mover variables in [firebolt variables](/guides/firebolt).
+
+## Bringing It All Together
+
+So how does a complete orchestrator configuration file looks like. Here's an example
+
+```shellscript
+# Example orchestrator configuration file
+
+# main 
+source=mysql
+target=firebolt
+mode=data
+
+# source
+source.outputDirectory=/mnt/benchmark/dumpdir
+source.tablesFile=/home/ziggy/wk/tables.txt
+source.dsnFile=/home/ziggy/wk/my.dsn
+source.logFile=/home/ziggy/wk/change_extractor.log
+source.maxThreads=10
+source.maxRowsPerDump=100000
+source.hexEncoding=false
+
+# target loader
+target.loader.dsnFile=/home/ziggy/wirekite/benchmark/urlfiles/fi_url.txt
+target.loader.awsBucket=fireboltgregtest
+target.loader.logFile=/home/ziggy/wk/data_loader.log
+target.loader.schemaFile=/home/ziggy/wirekite/benchmark/firenibble.scm
+target.loader.awsRegion=us-east-1
+target.loader.awsCredentialsFile=/home/ziggy/benchmark/aws_creds.txt
+target.loader.dataFileExtension=dkt
+target.loader.maxThreads=10
+target.loader.hexEncoding=false
+target.loader.removeFiles=true
+target.loader.countRows=false
+
+# target mover
+target.mover.maxThreads=10
+target.mover.removeFiles=true
+target.mover.awsRegion=us-east-1
+target.mover.dataDirectory=/mnt/benchmark/dumpdir
+target.mover.sourceFileExtension=dkt
+target.mover.gzipFiles=false
+target.mover.awsBucket=fireboltgregtest
+target.mover.logFile=/home/ziggy/wk/data_mover.log
+```

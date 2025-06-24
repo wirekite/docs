@@ -39,15 +39,9 @@ Imagine the same kind of performance impact when you can move all of the data fr
 
 One of the first stages of any data migration project is moving data to the target database. This involves extracting all the data and loading into the target database. Since the data does not have to be inserted in any given order in the target database, we can take advantage of large degree of parallelism.
 
-Here is a benchmark that shows the benefit.
-
-![](/images/benchmark1.svg)
 
 ### Replication / Change
 
 Once the data is loaded to the target database wirekite makes sure that continuous changes that are happening in the source database are replicated to the target database. Note that changes happen on the source database in a given order and must be executed in the same order on the target database, thus preventing us from using parallelism. Wirekite handles the
 single threaded replication very efficiently.
 
-Here is a benchmark that demonstrates that efficiency.
-
-![](/images/benchmark2.svg)
