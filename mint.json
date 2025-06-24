@@ -56,6 +56,13 @@
       ]
     },
     {
+      "group": "Running Wirekite",
+      "pages": [
+        "run/installation",
+        "run/execution"
+      ]
+    },
+    {
       "group": "Datatype Matrices",
       "pages": [
         "datatypes/mysql",
