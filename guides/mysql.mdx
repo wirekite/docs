@@ -100,3 +100,73 @@ database3.table3
 <ResponseField name="hexEncoding" type="boolean" default="false">
   Whether to extract string data as hex or base 64.
 </ResponseField>
+
+## Change Extractor
+
+Change extractor is a wirekite utility that extracts ongoing changes - Inserts, Updates, Deletes - for given tables. The change extractor can be run independently or run as part of orchestrator (check orchestrator section). However you run it, the change extractor needs certain configuration variables, which will have the same configurations whether you run it using change extractor or orchestrator.
+
+<ResponseField name="dsnFile" type="string" required>
+  dsnFile is the file containing the connection information for the mysql database.
+</ResponseField>
+
+The connection information has the following format
+
+```c++
+gkemnitz:gjk123@tcp(localhost:3306)/public?multiStatements=true&loc=Local
+```
+
+<ResponseField name="outputDirectory" type="string" required>
+  outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write files called number.ckt in the outputDirectory. The number will be an ever increasing number starting from 0.
+</ResponseField>
+
+<ResponseField name="tablesFile" type="string" required>
+  tablesFile is a file with a list of all the tables that are being extracted.
+</ResponseField>
+
+The format of the tablesFile is as follows.
+
+```c++
+database1.table1
+database2.table2
+database3.table3
+```
+
+<ResponseField name="logFile" type="string" required>
+  logFile refers to the full path of the logfile where the extractor will write the logging information.
+</ResponseField>
+
+<ResponseField name="verbose" type="boolean" default="false">
+  Whether to generate verbose output. in verbose mode the change extractor can generate extra file called metdata which can help you troubleshoot any issue.
+</ResponseField>
+
+<ResponseField name="processOneBinlog" type="boolean" default="false">
+  Whether to process one binlog and exit or continue processing more binlogs. This can be used for testing, before enabling extractor infinitely.
+</ResponseField>
+
+<ResponseField name="processCommits" type="boolean" default="false">
+  Whether to process begin and commoit statements or not. 
+</ResponseField>
+
+<ResponseField name="eventsPerFlush" type="number" default="5000">
+  The number of events at which wirekite will flush the buffer to the file. This is to ensure the regular flushing to the output files occur for performance reasons.
+</ResponseField>
+
+<ResponseField name="exitWhenIdle" type="boolean" default="false">
+  Whether to exit when all the binlogs have been processed, or wait for new binlogs to show up.
+</ResponseField>
+
+<ResponseField name="binlogFile" type="string" required>
+  The binlog file from where to start extracting changes. Generally this is the mysql coordinates where the data extract was taken. This does not need to be the full path of the binlog, just the binlog file name.
+</ResponseField>
+
+<ResponseField name="binlogPosition" type="number" default="0">
+  The binlog position in the binlogFile from where to start extracting changes. Generally this is the mysql coordinates where the data extract was taken.
+</ResponseField>
+
+
+
+
+
+
+
+
