@@ -1,115 +1,113 @@
 ---
 title: "PostgreSQL"
 description: "This guide talks about what do you need to do to configure Postgres to use Wirekite."
-icon: ""
 ---
 
 ## Extractor Prereqs
 
 To configure Postgres as an extractor you must have the following prereqs met.
 
- 1. Make sure that the database version is `5.x` and above.
- 2. Make sure the tables being extracted are InnoDB tables.
- 3. Make sure binlogging is enabled and format is ROW. `binlog_format = ROW`
- 4. Also make sure that `binlog_row_image` is set to appropriate value. Wirekite does not mandate any particular value, as long as the data that you are trying to extract is logged.
- 5. Make sure that you configure a user for wirekite with full privileges on the tables that we are extracting. It is strongly preferred to create a separate user for wirekite.
- 6. Wirekite will also create some internal tables(wirekite_progress and wirekite_action). Make sure wirekite user has read and write privileges to those tables.
- 7. Make sure that MySQL has privileges to write to the directory where the wirekite output files will be generated. This can be configured by setting appropriate value for `secure_file_priv`.
- 9. When doing a data extract make sure that replication is stopped. This is to make sure that the dump is consistent to given mysql coordinate position.
-10. It is highly preferable to run wirekite on a slave of production database, since wirekite can generate lot of load on the database server.
+ 1. Make sure that the database version is `10.x` and above, as the Wirekite Change Extractor uses the "pgoutput" replication plugin.
+ 2. Create a user that will be used to execute the extraction operation.  The below discussion will assume that user is called `wirekite`.
+ 3. Make sure the tables being extracted are readable by `wirekite`.
+ 4. As a PostgreSQL superuser - typically `postgres` - do`grant all on schema public to wirekite;`
+ 5. Also make sure that the replica is configured to use`replica identity full`.
+ 6. Wirekite will also create some internal tables: `wirekite_progress `and `wirekite_action`. Make sure the `wirekite `user has read and write access to those tables.
+ 7. Make sure that the `postgres `user has write permission to the directories that wirekite will write to, and that there is enough space to store the data
+ 8. When doing a Data extract make sure that replication is stopped and the database instance being dumped from is quiescent. This is to make sure that the entire dump is consistent to a specific position.
+ 9. After doing a Data Extract, but before re-enabling replication, you should create a REPLICATION SLOT for the Change Extractor.
+10. It is highly preferable to run wirekite on a **replica **of a production-facing database instance, since wirekite can generate load on the database server, particularly as the instance needs to be quiesced during Data extraction as mentioned above.
 
 ## Schema Extractor
 
-Schema extractor is a wirekite utility that extracts the schema related information for given tables. The schema extractor can be run independently or run as part of orchestrator (check orchestrator section). However you run it, the schema extractor needs certain configuration variables, which will have the same configurations whether you run it using schema extractor or orchestrator.
+Schema Extractor is a wirekite utility that extracts the schema related information for some or all the tables on a database instance.  It extracts a database-independent notion of the schema for the tables to a file.\
+\
+The Schema Extractor can be run independently or run as a workflow by the Orchestrator (check Orchestrator section). However you run it, the Schema Extractor needs certain configuration variables, which will have the same configurations whether you run it using Schema Extractor or the Orchestrator.
 
-Here are the configuration variables required to run schema extractor.
+Here are the configuration variables required to run the Schema Extractor.
 
 <ResponseField name="dsnFile" type="string" required>
-  dsnFile is the file containing the connection information for the database.
-</ResponseField>
+  dsnFile is a file containing the connection information for the instance that will be accessed by the Schema Extractor.
 
-The connection information has the following format
+  The connection information has the following format
 
-```c++
-postgres://username:password@host:port/database
-```
+  ```c++
+  postgres://username:password@host:port/database
+  ```
 
-<ResponseField name="outputDirectory" type="string" required>
-  outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write a file called wirekite_schema.skt in the outputDirectory.
+  ### `outputDirectory string required`
+
+  outputDirectory is the file system directory that the Schema Extractor will write output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write a file called wirekite_schema.skt in the outputDirectory.
 </ResponseField>
 
 <ResponseField name="tablesFile" type="string" required>
-  tablesFile is a file with a list of all the tables that are being extracted.
-</ResponseField>
+  tablesFile is a file with a list of all the tables whose schemas are to be extracted.
 
-The format of the tablesFile is as follows.
+  The format of the tablesFile is as follows.
 
-```c++
-database1.table1
-database2.table2
-database3.table3
-```
+  ```c++
+  database1.table1
+  database2.table2
+  database3.table3
+  ```
 
-<ResponseField name="logFile" type="string" required>
-  logFile refers to the full path of the logfile where the extractor will write the logging information.
-</ResponseField>
+  ### `logFile string `required
 
-## Data Extractor
+  logFile is the full path of the log file where the Schema Extractor will write the logging information.
 
-Data extractor is a wirekite utility that extracts the data for given tables. The data extractor can be run independently or run as part of orchestrator (check orchestrator section). However you run it, the data extractor needs certain configuration variables, which will have the same configurations whether you run it using data extractor or orchestrator.
+  ## Data Extractor
 
-<ResponseField name="dsnFile" type="string" required>
-  dsnFile is the file containing the connection information for the mysql database.
-</ResponseField>
+  The Data Extractor is a wirekite utility that extracts the data for given tables. The Data Extractor can be run independently or run in a workflow by the Orchestrator (check Orchestrator section). The Data Extractor needs certain configuration variables, which will have the same values whether you run it using Data Extractor or Orchestrator.
 
-The connection information has the following format
+  <ResponseField name="dsnFile" type="string" required>
+    dsnFile is a file containing the connection information for the PostgreSQL database.
 
-```c++
-postgres://username:password@host:port/database
-```
+    The connection information has the following format
 
-<ResponseField name="outputDirectory" type="string" required>
-  outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write files called table_name.number.dkt in the outputDirectory.
-</ResponseField>
+    ```c++
+    postgres://username:password@host:port/database
+    ```
 
-<ResponseField name="tablesFile" type="string" required>
-  tablesFile is a file with a list of all the tables that are being extracted.
-</ResponseField>
+    <ResponseField name="outputDirectory" type="string" required>
+      outputDirectory represents the directory to which wirekite will write the output files. The path should be absolute and writable by the wirekite binaries. Wirekite will write files called table_name.number.dkt in the outputDirectory.
 
-The format of the tablesFile is as follows.
+      <ResponseField name="tablesFile" type="string" required>
+        tablesFile is a file with a list of all the tables that are being extracted.
 
-```c++
-database1.table1
-database2.table2
-database3.table3
-```
+        The format of the tablesFile is as follows.
 
-<ResponseField name="logFile" type="string" required>
-  logFile refers to the full path of the logfile where the extractor will write the logging information.
-</ResponseField>
+        ```c++
+        database1.table1
+        database2.table2
+        database3.table3
+        ```
 
-<ResponseField name="maxThreads" type="number" default="5">
-  The number of parallel threads that will run at the same time to extract data. One thread usually uses 1 cpu and there might be contention if number of threads are too high than the number of cpus.
-</ResponseField>
+        <ResponseField name="logFile" type="string" required>
+          logFile refers to the full path of the logfile where the extractor will write the logging information.
 
-<ResponseField name="maxPages" type="number" default="25000">
-  Maximum number of pages to visit in one select.
-</ResponseField>
+          <ResponseField name="maxThreads" type="integer">
+            maxThreads is number of parallel threads that will run to extract data. One thread usually uses 1 cpu and there might be contention if number of threads are too high than the number of cpus.  If you're using a dedicated 32 CPU host for the extraction, we recommend using 32 for this number.
 
-<ResponseField name="maxRowsPerDump" type="number" default="200000">
-  The number of rows written to one dump file.
+            <ResponseField name="maxPages" type="integer">
+              maxPages is the maximum number of PostgreSQL storage pages to visit by a single extraction thread.  As pages have varying numbers of rows, this coresponds somewhat loosely to the number of rows to be extracted at a time.
+            </ResponseField>
+          </ResponseField>
+        </ResponseField>
+      </ResponseField>
+    </ResponseField>
+  </ResponseField>
 </ResponseField>
 
 <ResponseField name="hexEncoding" type="boolean" default="false">
-  Whether to extract string data as hex or base 64.
+  hexEncoding is used to specify whether string data will be extracted as hex.  The default is base64.  hexEncoding should only be used if you're loading to a target that doesn't handle base64, such as Snowflake.
+
+  ## Change Extractor
 </ResponseField>
 
-## Change Extractor
-
-Change extractor is a wirekite utility that extracts ongoing changes - Inserts, Updates, Deletes - for given tables. The change extractor can be run independently or run as part of orchestrator (check orchestrator section). However you run it, the change extractor needs certain configuration variables, which will have the same configurations whether you run it using change extractor or orchestrator.
+Change Extractor is a wirekite utility that extracts ongoing changes to rows - Inserts, Updates, Deletes - for given tables. The Change Extractor can be run independently or run as part of the Orchestrator (check Orchestrator section). However you run it, the Change Extractor needs certain configuration variables, which will have the same values whether you run the Change Extractor directly or as part of a workflow using the Orchestrator.
 
 <ResponseField name="dsnFile" type="string" required>
-  dsnFile is the file containing the connection information for the mysql database.
+  dsnFile is the file containing the connection information for the PostgreSQL database.
 </ResponseField>
 
 The connection information has the following format
@@ -139,26 +137,17 @@ database3.table3
 </ResponseField>
 
 <ResponseField name="processCommits" type="boolean" default="false">
-  Whether to process begin and commoit statements or not. 
+  Whether to output syntax marking BEGIN and COMMIT or not.  We guarantee that a single output file will completely contain all transactions and that no transactions will "span" output files.
 </ResponseField>
 
 <ResponseField name="eventsPerFlush" type="number" default="5000">
-  The number of events at which wirekite will flush the buffer to the file. This is to ensure the regular flushing to the output files occur for performance reasons.
+  The number of change events at which the Change Extractor will flush the buffer to the file. This is to ensure the regular flushing to the output files occur for performance reasons.  Note that the buffer will be flushed at a transaction boundary after eventsPerFlush events have been processed, so an individual file file may contain more events than this.
 </ResponseField>
 
 <ResponseField name="exitWhenIdle" type="boolean" default="false">
-  Whether to exit when all the binlogs have been processed, or wait for new binlogs to show up.
+  Whether to exit when all pending changes have been processed, or wait until new changes to show up and "run forever".
 </ResponseField>
 
 <ResponseField name="replicationSlot" type="string" required>
-  The replication slot from where to start extracting changes. Generally this is the position where the data extract was taken. 
+  The replication slot from where to start extracting changes. Generally this is the position where the data extract was taken.
 </ResponseField>
-
-
-
-
-
-
-
-
-
