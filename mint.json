@@ -61,7 +61,7 @@
         "datatypes/mysql",
         "datatypes/postgres",
         "datatypes/oracle",
-        "datatypes/oracle"
+        "datatypes/sqlserver"
       ]
     },
     {
