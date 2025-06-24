@@ -37,12 +37,12 @@
     {
       "name": "Community",
       "icon": "slack",
-      "url": "https://wirekite.slack.com/"
+      "url": "https://wirekite-public.slack.com/"
     },
     {
       "name": "Blog",
       "icon": "newspaper",
-      "url": "https://wirekite.webflow.io/blog"
+      "url": "https://blog.wirekite.io/series/wirekite-thoughts"
     }
   ],
   "navigation": [
