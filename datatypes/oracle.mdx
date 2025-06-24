@@ -12,12 +12,14 @@ The following table explains how the Oracle datatypes are mapped to the target d
 | --------------- | ----------------- | ------------------ |
 | **Numbers** | | |
 | `NUMBER` | `NUMERIC` | `NUMBER` |
-| `BINARY_FLOAT` | `FLOAT,REAL` | `FLOAT` |
+| `BINARY_FLOAT, FLOAT` | `REAL` | `FLOAT` |
 | `BINARY_DOUBLE` | `DOUBLE` | `FLOAT` |
 | **Times** | | |
-| `DATE` | `TIMESTAMP` | `TIMESTAMP` |
-| `TIMESTAMP` | `TIMESTAMP` | `TIMESTAMP` |
+| `DATE` | `TIMESTAMP` | `TIMESTAMP_NTZ` |
+| `TIMESTAMP` | `TIMESTAMP` | `TIMESTAMP_NTZ` |
 | `TIMESTAMP WITH TIME ZONE` | `TIMESTAMPTZ` | `TIMESTAMP_TZ` |
+| `TIMESTAMP WITH LOCAL TIME ZONE` | `TIMESTAMP` | `TIMESTAMP_LTZ` |
+| `INTERVAL YEAR TO MONTH, INTERVAL DAY TO SECOND` | `TEXT` | `VARCHAR(64)` |
 | **Strings** | | |
 | `CHAR` | `TEXT` | `VARCHAR` |
 | `NCHAR` | `TEXT` | `VARCHAR` |
@@ -25,9 +27,7 @@ The following table explains how the Oracle datatypes are mapped to the target d
 | `NVARCHAR2` | `TEXT` | `VARCHAR` |
 | `CLOB` | `TEXT` | `VARCHAR` |
 | `NCLOB` | `TEXT` | `VARCHAR` |
-| `LONG` | `TEXT` | `VARCHAR` |
-| `BFILE` | `TEXT` | `VARCHAR` |
+| `(Any Oracle type not in the above list)` | `TEXT` | `VARCHAR(4000)` |
 | **Blobs** | | |
 | `RAW` | `BYTEA` | `BINARY` |
-| `LONG RAW` | `BYTEA` | `BINARY` |
 | `BLOB` | `BYTEA` | `BINARY` |

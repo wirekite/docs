@@ -7,7 +7,7 @@ description: 'This page explains how data types are mapped from a source SQL Ser
 | -------------- | ----------------- | ------------------ |
 | **Numbers** | | |
 | `TINYINT` | `INTEGER` | `TINYINT` |
-| `SMALLINT` | `INTEGER` | `NUMBER` |
+| `SMALLINT` | `INTEGER` | `SMALLINT` |
 | `INT` | `INTEGER` | `INT` |
 | `BIGINT` | `BIGINT` | `BIGINT` |
 | `NUMERIC` | `NUMERIC` | `NUMBER` |
@@ -20,8 +20,8 @@ description: 'This page explains how data types are mapped from a source SQL Ser
 | **Times** | | |
 | `DATE` | `DATE` | `DATE` |
 | `TIME` | `TEXT` | `TIME` |
-| `DATETIME` | `TIMESTAMP` | `TIMESTAMP` |
-| `DATETIME2` | `TIMESTAMP` | `TIMESTAMP` |
+| `DATETIME` | `TIMESTAMP` | `TIMESTAMP_NTZ` |
+| `DATETIME2` | `TIMESTAMP` | `TIMESTAMP_NTZ` |
 | `DATETIMEOFFSET` | `TIMESTAMPTZ` | `TIMESTAMP_TZ` |
 | **Strings** | | |
 | `CHAR` | `TEXT` | `VARCHAR` |

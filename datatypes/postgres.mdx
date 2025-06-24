@@ -11,21 +11,21 @@ The following table explains how the PostgreSQL datatypes are mapped to the targ
 | Postgres Datatype | Firebolt Datatype | Snowflake Datatype |
 | ----------------- | ----------------- | ------------------ |
 | **Numbers** | | |
-| `SMALLINT` | `INTEGER` | `NUMBER` |
+| `SMALLINT` | `INTEGER` | `SMALLINT` |
 | `INT` | `INTEGER` | `INT` |
 | `BIGINT` | `BIGINT` | `BIGINT` |
 | `NUMERIC` | `NUMERIC` | `NUMBER` |
 | `FLOAT` | `REAL` | `FLOAT` |
 | `REAL` | `REAL` | `FLOAT` |
 | `DOUBLE PRECISION` | `DOUBLE` | `FLOAT` |
-| `SMALLSERIAL` | `INTEGER` | `NUMBER` |
+| `SMALLSERIAL` | `INTEGER` | `SMALLINT` |
 | `SERIAL` | `INTEGER` | `INT` |
 | `BIGSERIAL` | `BIGINT` | `BIGINT` |
 | `MONEY` | `NUMERIC` | `NUMBER` |
 | `BOOLEAN` | `BOOLEAN` | `BOOLEAN` |
 | `OBJECT IDENTIFIER TYPES` | `INTEGER` | `INT` |
 | **Times** | | |
-| `TIMESTAMP` | `TIMESTAMP` | `TIMESTAMP` |
+| `TIMESTAMP` | `TIMESTAMP` | `TIMESTAMP_NTZ` |
 | `TIMESTAMP WITH TIME ZONE` | `TIMESTAMPTZ` | `TIMESTAMP_TZ` |
 | `DATE` | `DATE` | `DATE` |
 | `TIME` | `TEXT` | `TIME` |
@@ -35,16 +35,16 @@ The following table explains how the PostgreSQL datatypes are mapped to the targ
 | `CHARACTER` | `TEXT` | `VARCHAR` |
 | `CHARACTER VARYING` | `TEXT` | `VARCHAR` |
 | `TEXT` | `TEXT` | `VARCHAR` |
+| `UUID` | `TEXT` | `VARCHAR` |
+| `XML` | `TEXT` | `VARCHAR` |
+| `JSON` | `TEXT` | `VARIANT` |
+| `JSONB` | `TEXT` | `VARIANT` |
 | `ENUM` | `TEXT` | `VARCHAR` |
 | `GEOMETRIC TYPES` | `TEXT` | `VARCHAR` |
 | `NETWORK ADDRESS TYPES` | `TEXT` | `VARCHAR` |
 | `BIT STRING TYPES` | `TEXT` | `VARCHAR` |
 | `TEXT SEARCH TYPES` | `TEXT` | `VARCHAR` |
-| `UUID` | `TEXT` | `VARCHAR` |
-| `XML` | `TEXT` | `VARCHAR` |
-| `JSON` | `TEXT` | `VARIANT` |
-| `JSONB` | `TEXT` | `VARIANT` |
-| `COMPOSITE TYPES` | `TEXT` | `VARCHAR` |
+| `COMPOSITE TYPES` | `TEXT` | `VARIANT` |
 | `RANGE TYPES` | `TEXT` | `VARCHAR` |
 | `DOMAIN TYPES` | `TEXT` | `VARCHAR` |
 | `PG_LSN TYPE` | `TEXT` | `VARCHAR` |

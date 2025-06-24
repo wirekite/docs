@@ -12,8 +12,8 @@ The following table explains how the MySQL datatypes are mapped to the target da
 | -------------- | ----------------- | ------------------ |
 | **Numbers** | | |
 | `TINYINT` | `INTEGER` | `TINYINT` |
-| `SMALLINT` | `INTEGER` | `NUMBER` |
-| `MEDIUMINT` | `INTEGER` | `NUMBER` |
+| `SMALLINT` | `INTEGER` | `SMALLINT` |
+| `MEDIUMINT` | `INTEGER` | `INT` |
 | `INT` | `INTEGER` | `INT` |
 | `BIGINT` | `BIGINT` | `BIGINT` |
 | `NUMERIC` | `NUMERIC` | `NUMBER` |
@@ -27,8 +27,8 @@ The following table explains how the MySQL datatypes are mapped to the target da
 | `YEAR` | `INTEGER` | `NUMBER` |
 | **Times** | | |
 | `DATE` | `DATE` | `DATE` |
-| `DATETIME` | `TIMESTAMP` | `TIMESTAMP` |
-| `TIMESTAMP` | `TIMESTAMP` | `TIMESTAMP` |
+| `DATETIME` | `TIMESTAMP` | `TIMESTAMP_NTZ` |
+| `TIMESTAMP` | `TIMESTAMP` | `TIMESTAMP_LTZ` |
 | `TIME` | `TEXT` | `TIME` |
 | **Strings** | | |
 | `CHAR` | `TEXT` | `VARCHAR` |
@@ -37,8 +37,6 @@ The following table explains how the MySQL datatypes are mapped to the target da
 | `TEXT` | `TEXT` | `VARCHAR` |
 | `MEDIUMTEXT` | `TEXT` | `VARCHAR` |
 | `LONGTEXT` | `TEXT` | `VARCHAR` |
-| `ENUM` | `TEXT` | `VARCHAR` |
-| `SET` | `TEXT` | `VARCHAR` |
 | `JSON` | `TEXT` | `VARIANT` |
 | `POINT` | `TEXT` | `VARCHAR` |
 | `LINESTRING` | `TEXT` | `VARCHAR` |
@@ -52,3 +50,6 @@ The following table explains how the MySQL datatypes are mapped to the target da
 | `BLOB` | `BYTEA` | `BINARY` |
 | `MEDIUMBLOB` | `BYTEA` | `BINARY` |
 | `LONGBLOB` | `BYTEA` | `BINARY` |
+| **Sets** | | |
+| `ENUM` | `TEXT` | `VARCHAR` |
+| `SET` | `TEXT` | `VARCHAR` |
