@@ -86,6 +86,12 @@
         "run/installation",
         "run/execution"
       ]
+    },
+    {
+      "group": "Wirekite Database Commandline",
+      "pages": [
+        "run/commandline"
+      ]
     }
   ],
   "footerSocials": {
