@@ -9,40 +9,40 @@ description: "This page talks about the general architecture of Wirekite, the va
 
 ## Flow
 
-Simply speaking wirekite sits in the middle of source and target databases, extracts "stuff" from source databases, moves it to relevant middle ware storage, and loads it onto the target databases. Thus essentially it has 3 components as explained next.
+Simply speaking wirekite sits in the middle of source and target databases.  Extractors extract "stuff" from source databases, Movers move it to intermediate storage, and Loaders loads it to the target databases. Thus Wirekite has three classes of components as explained below.
 
 ## Entities&#x20;
 
-Wirekite extracts and loads 3 entities from the source database into the target database and in the following order.
+Wirekite extracts and loads three general types of data from the source database into the target database and in the following order.
 
 <Steps>
   <Step title="Schema">
-    Schema essentially refers to the "structure" of the data. It constitutes the definition of tables, the columns, their datatypes, any other properties like primary keys, unique keys, foreign keys, constraints etc. Thus the Schema files contain create table statement. This is a one time task so that we have empty tables in the target database that can receive the incoming data in the next steps.
+    Schema essentially refers to the "structure" of the data. It constitutes the definition of tables, the columns, their datatypes, any other properties like primary keys, unique keys, foreign keys, constraints etc. Schema files contain create table statements and similar data definitions. This is a one time task so that we have empty tables in the target database that can receive data in the next steps.
   </Step>
 
   <Step title="Data">
-    Data at this stage refers to the initial dump of data from the source. Usually this means multiple tables which can also be large in size (TBs/PBs). Thus this is essentially the heavy weight bits of the source database that needs to be loaded onto the target database. This is also a one time process. This is usually done from a replica of the source database, since the live source database is live and is serving production applications. Wirekite uses a proprietary format to store data which is only interpret-able by wirekite components. Also note that this process has a high degrees of parallelism since data can be loaded onto the target in any order.
+    Data at this stage refers to the initial dump of data from the source. Usually this means multiple tables which can also be large in size (TBs/PBs). Thus this is essentially the heavy weight bits of the source database that needs to be loaded onto the target database. This is also a one time process. This is usually done from a replica of the source database, since the production-facing instance is serving production applications. Wirekite uses a proprietary format to store data which is only interpret-able by wirekite components. Also note that this process has a high degrees of parallelism since data can be loaded onto the target in any order.
   </Step>
 
   <Step title="Change">
-    Change refers to the constant "changes" that happen to the source database. Typically this means Inserts, Updates and Deletes. Note that this happens infinitely and Wirekite establishes a pipeline from the source to the target so that target is kept up to date to the source. Thus this is an ongoing process. Also note that this is usually a single threaded process since the transaction that are happening on source need to be executed on the target in the exact same order.
+    Change refers to the constant "changes" that take place in the source database. Typically this means Inserts, Updates and Deletes. Note that this happens "forever"  and Wirekite establishes a pipeline from the source to the target so that target is kept up to date to the source. Note that this is usually a single threaded process since transactions that COMMIT on the source need to COMMIT on the target in the exact same order.
   </Step>
 </Steps>
 
 ## Components
 
-Wirekite essentially has 3 components which are essentially the actions that are taken on the entities listed above.&#x20;
+Wirekite has three components which are essentially the actions that are taken on the data listed above.&#x20;
 
 <Steps>
   <Step title="Extractor">
-    This is the component that extracts schema, data and change from the source database. Extractors are only aware of sources and are completely agnostic to the next steps that follow after. Thus this component essentially "reads" from the source database to "writes" to the relevant storage.
+    This is the component that extracts schema, data and change from the source database. Extractors are only aware of sources and are completely agnostic to downstream target. Thus this component "reads" from the source database to "writes" to intermediate storage.
   </Step>
 
   <Step title="Mover">
-    This is the component that does the moving of the files from source database to target. Note that mover is completely agnostic to the contents of the files and does not read/write them, but essentially just moves the blocks from one storage location to another.
+    This is the component that does the moving of the files from the source database to the target. Note that Mover is completely agnostic to the contents of the files and do not read or write them, but just moves the files from one storage location to another.
   </Step>
 
   <Step title="Loader">
-    This is the component that reads the file which are moved by the mover and "loads" them onto the target databases. Loaders work on schema, data and change files. Loaders essentially read the files and translate them to corresponding database language statements and execute those statements on the database.
+    This is the component that reads the files which are moved by the Mover and "loads" them to the target database instances. Loaders work on schema, data and change files. Loaders read the files and translate them to corresponding database language statements and execute those statements on the database.
   </Step>
 </Steps>
