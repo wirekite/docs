@@ -1,5 +1,64 @@
 ---
-title: 'Wirekite Database Command Line'
-description: 'This page talks about Wirekite Database Command Line Utility.'
+title: "Wirekite SQL Command Line"
+description: "The Wirekite SQL Command Line Utility."
 ---
 
+Most DB vendors - although not all - support some sort of SQL command line tool.  They are quite different from each other, and are somewhat difficult to support for a general-purpose, heterogenous DB product.
+
+To get around this problem, Wirekite implemented a simple SQL command line tool.  The cmdline tool uses the same DSN or URL files for connecting that other Wirekite tools use.  If you can connect to a database using the cmdline tool, the same DSN/URL file will work for connecting with other Wirekite tools.
+
+## Using the cmdline tool
+
+Here's an example of connecting and running the cmdline tool using Firebolt.
+
+```shellscript
+$ ./cmdline -d firebolt -c fi_url.txt
+firebolt instance connect successful
+=> \h
+\i filename          - load a file of SQL statments
+\o [filename]        - write output to filename - \o [no-file] disables
+\d csv|list          - change display format
+\p <num>             - change number of rows per page: 0=no paging
+\r true|false        - show row numbers
+\t                   - toggle show time
+\D                   - print current display settings
+\h                   - print this help info
+\c value-enclose-char value-separator-char row-end-char show-header:true|false
+CSV format spec chars can be QUOTE, DOUBLEQUOTE, COMMA, SPACE, PIPE, NONE, NEWLINE, CRLF, other literals
+<ctrl>-D              - exit
+=> create table example (a int, b int);
+ok
+=> insert into example values (1,1),(2,2),(3,3);
+ok
+=> select * from example;
+1: a: 1
+1: b: 1
+2: a: 2
+2: b: 2
+3: a: 3
+3: b: 3
+=> \d csv
+display type set to csv
+=> select * from example;
+'a','b'
+'1','1'
+'2','2'
+'3','3'
+=> bye
+```
+## cmdline tool Usage Details
+```shellscript
+cmdline -d dbtype -c file-containing-conn-info.txt
+```
+Valid dbtypes include:
+
+- firebolt
+- mysql
+- oracle
+- snowflake
+- sqlserver
+
+## cmdline tool Notes
+
+- We are working on PostgreSQL support, but its psql tool should be used there.
+- Embedded semicolons in SQL string literals or comments are not yet supported.
