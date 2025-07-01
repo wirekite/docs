@@ -25,8 +25,8 @@
     }
   ],
   "topbarCtaButton": {
-    "name": "Chat with Wirekite",
-    "url": "https://wirekite-public.slack.com/"
+    "name": "Contact Wirekite",
+    "url": "mailto:hello@wirekite.io"
   },
   "anchors": [
     {
