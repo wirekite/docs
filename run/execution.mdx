@@ -54,19 +54,19 @@ Change means that we are extracting changes -- Inserts, Updates , Deletes , Begi
 
 Both `source` and `target` variables can have child variables. The child variables are always represented as `source.variable=value`. The child variables can vary depending upon what is the source.
 
-For example if the source=mysql then the child variables can be any of the variables listed in [mysql variables](/guides/mysql) but if the source is oracle then the variables need to be [oracle variables](/guides/oracle).
+For example if the source=mysql then the child variables can be any of the variables listed in [mysql variables](/sourceguides/mysql) but if the source is oracle then the variables need to be [oracle variables](/sourceguides/oracle).
 
 ## Target Child Variables
 
 Just like source can have child variables target can also have child variables. And similarly the target child variables depends upon the target.
 
-For example if the target=snowflake then the child variables can be any of the variables listed in [snowflake variables](/guides/snowflake).
+For example if the target=snowflake then the child variables can be any of the variables listed in [snowflake variables](/targetguides/snowflake).
 
 However target child variables have a slightly more expanded syntax. Target usually has two components -- a loader and a mover. A loader essentially loads the files on to the target database while a mover actually moves the files from source to the target. Both loader and mover can take configuration variables specific to them.
 
 To distinguish between the variables for loader and mover the syntax that we use is `target.loader.variable=value` and `target.mover.variable=value`.
 
-For example the if the target= firebolt you can see both loader and mover variables in [firebolt variables](/guides/firebolt).
+For example the if the target= firebolt you can see both loader and mover variables in [firebolt variables](/targetguides/firebolt).
 
 ## Bringing It All Together
 
