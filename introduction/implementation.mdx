@@ -61,7 +61,7 @@ The **sequence** that is to be followed in a real production infrastructure is a
 
 ## Sequential Steps
 
-The following architectural diagram is much more fleshed out and talks about how data will be migrated to a target database and how a replication pipeline will be established from source to target database.&#x20;
+The following architectural diagram how data will be migrated to a target database and how a replication pipeline will be established from a source to a target database instance.&#x20;
 
 <Frame caption="Wirekite Implementation and Sequence">
   <img src="/images/DetailedArchitecture.svg" />
@@ -71,13 +71,13 @@ The following architectural diagram is much more fleshed out and talks about how
 
 These are some of the noteworthy points regarding the above diagram.&#x20;
 
-1. Wirekite operates using a replica of the customer-facing database instance. This is almost always the case since we do not want to take down the active production database instance. The details of setting up a replica is database vendor-specific. &#x20;
+1. Wirekite operates using a replica of the customer-facing database instance. This is so we can avoid taking down the active production database instance, while having a quiesced database instance during the initial data extraction. The details of setting up a replica is database vendor-specific. &#x20;
 
-2. Note that Wirekite components - Extractor, Mover, and Loader - can and should run in parallel. This minimizes the amount of time required to load an initial dump, as well as minimizing storage space needed for in-flight data files fetched by the Extractor and loaded by the Loader. The shorter the initial dump/move/load time the shorter the lag when we switch from initial extraction mode to change data capture mode.
+2. Wirekite components - Extractor, Mover, and Loader - can and should run in parallel. This minimizes the amount of time required to load an initial dump, as well as minimizing storage space needed for in-flight data files as they are fetched by the Extractor and loaded by the Loader. The shorter the initial dump/move/load time the shorter the lag when we switch from initial extraction mode to change data capture mode.
 
-3. The performance characteristics (latency/throughput) of the connectivity between source and target as well as the storage database instances and their hosts should be appropriately scaled to the size and activity of the database.
+3. The performance characteristics - latency and throughput - of the connectivity between source and target as well as the storage database instances and their hosts should be appropriately scaled to the size and activity of the database.
 
-4. The performance of the change data capture must be more than the rate of overall change events in the source database. For example if you are generating a 1 GB MySQL or MariaDB binlog in 10 seconds, you need to scale your endpoints and networking so that the contents of this binlog are extracted, shipped, and loaded in significantly less than 10 seconds. If this does not happen then the target database will lag the source database "forever". Specifically the following equation must hold true.&#x20;
+4. The performance of the change data capture must be more than the rate of overall change events in the source database. For example if you are generating a 1 GB MySQL or MariaDB binlog in 10 seconds, you need to scale your endpoints and networking so that the contents of this binlog are extracted, moved, and loaded in significantly less than 10 seconds. If this is not the case, the target database will lag the source database "forever". Specifically the following equation must hold true.&#x20;
 
 <Note>
   **wirekite\_extraction\_time + wirekite\_ship\_time + wirekite\_load\_time \< source\_database\_change\_generation\_time**
