@@ -5,7 +5,7 @@ description: "This page provides a more detailed view of the architecture, speci
 
 ## Wirekite Components&#x20;
 
-As we understood in the previous section, wirekite has 3 entities -- schema, data and change -- and 3 components -- extractor, mover and loader. The entities are the objects in the database that wirekite works upon, while components are the operators that work on the entities.&#x20;
+Wirekite has three main database entities -- schema, data and change -- and three components -- Extractor, Mover and Loader. The entities are the objects in the database that wirekite works upon, while components are the operators that work on the entities.&#x20;
 
 Lets put these all together and we get a sequence in which all the components work on the entities to ultimately establish a target database which is continuously updated from the source database.  &#x20;
 
@@ -67,17 +67,17 @@ The following architectural diagram is much more fleshed out and talks about how
   <img src="/images/DetailedArchitecture.svg" />
 </Frame>
 
-## Salient Points
+## Design Points
 
-Note that these are some of the noteworthy points regarding the above diagram.&#x20;
+These are some of the noteworthy points regarding the above diagram.&#x20;
 
-1. Note that we are using a replica of the production database. This is almost always the case since we do not want to load the production database which is currently serving the live production application. The replication is usually established using the native replication technology pertinent to the database. &#x20;
+1. Wirekite operates using a replica of the customer-facing database instance. This is almost always the case since we do not want to take down the active production database instance. The details of setting up a replica is database vendor-specific. &#x20;
 
-2. Note that data components (extractor, mover, loader) can and should run in parallel. This minimizes the amount of time required to load an initial dump. The shorter the initial dump/move/load time the shorter the lag when we turn on the change replication.
+2. Note that Wirekite components - Extractor, Mover, and Loader - can and should run in parallel. This minimizes the amount of time required to load an initial dump, as well as minimizing storage space needed for in-flight data files fetched by the Extractor and loaded by the Loader. The shorter the initial dump/move/load time the shorter the lag when we switch from initial extraction mode to change data capture mode.
 
-3. The performance characteristics (latency/throughput) of the networking components ss well as the storage components (source/target) matter a lot and should be appropriately scaled to the size and activity of the database.
+3. The performance characteristics (latency/throughput) of the connectivity between source and target as well as the storage database instances and their hosts should be appropriately scaled to the size and activity of the database.
 
-4. It is very important that the performance of the change replication should be more than the rate at which change is happening on the database. For example if you are generating a 1 GB binlog in 10 seconds, you should be able to extract,ship and apply one binlog in less than 10 seconds. If this does not happen then the target database will not catchup to the source database and lag will keep growing infinitely. Specifically the following equation must hold true.&#x20;
+4. The performance of the change data capture must be more than the rate of overall change events in the source database. For example if you are generating a 1 GB MySQL or MariaDB binlog in 10 seconds, you need to scale your endpoints and networking so that the contents of this binlog are extracted, shipped, and loaded in significantly less than 10 seconds. If this does not happen then the target database will lag the source database "forever". Specifically the following equation must hold true.&#x20;
 
 <Note>
   **wirekite\_extraction\_time + wirekite\_ship\_time + wirekite\_load\_time \< source\_database\_change\_generation\_time**
