@@ -1,6 +1,6 @@
 ---
 title: "Architecture"
-description: "This page talks about the general architecture of Wirekite, the various components that comprise it and functions, limitations of those components. For a more detailed architecture please check the Implementation page.  "
+description: "This is the general architecture of Wirekite, the components that make up the Wirekite data movement stack, as well as limitations of those components. For a more detailed architecture please check the Implementation page.  "
 ---
 
 <Frame caption="Architecture">
@@ -9,7 +9,7 @@ description: "This page talks about the general architecture of Wirekite, the va
 
 ## Flow
 
-Simply speaking wirekite sits in the middle of source and target databases.  Extractors extract "stuff" from source databases, Movers move it to intermediate storage, and Loaders loads it to the target databases. Thus Wirekite has three classes of components as explained below.
+Wirekite's components operate beteen the source and target database instances.  Extractors extract "stuff" from source databases, Movers move it to intermediate storage, and Loaders load the "stuff" to the target database instances. Thus Wirekite has three classes of components as explained below.
 
 ## Entities&#x20;
 
@@ -17,15 +17,15 @@ Wirekite extracts and loads three general types of data from the source database
 
 <Steps>
   <Step title="Schema">
-    Schema essentially refers to the "structure" of the data. It constitutes the definition of tables, the columns, their datatypes, any other properties like primary keys, unique keys, foreign keys, constraints etc. Schema files contain create table statements and similar data definitions. This is a one time task so that we have empty tables in the target database that can receive data in the next steps.
+    Schema refers to the "structure" of the data. Schema covers the definition of tables, columns, datatypes, and other properties such as primary keys and constraints. Wirekite extracts vendor-specific schema definitions into generic "schema files" containing CREATE TABLE statements and related data definitions. This is a one time task so that we have empty tables in the target database that can receive data in the next steps.
   </Step>
 
   <Step title="Data">
-    Data at this stage refers to the initial dump of data from the source. Usually this means multiple tables which can also be large in size (TBs/PBs). Thus this is essentially the heavy weight bits of the source database that needs to be loaded onto the target database. This is also a one time process. This is usually done from a replica of the source database, since the production-facing instance is serving production applications. Wirekite uses a proprietary format to store data which is only interpret-able by wirekite components. Also note that this process has a high degrees of parallelism since data can be loaded onto the target in any order.
+    Data at this stage refers to the initial dump of data from the source. Usually this means multiple tables which can also be large in size. This is the heavyweight bits of the source database that needs to be loaded to the target database. This is also a one time process. Unless you can afford to quiesce (or take down) your customer-facing database instance, this is usually done from a replica. Wirekite data extractors use a CSV=based proprietary format to extract data.  This format is understood by Wirekite loaders. This process supports a high degrees of parallelism since data can be loaded onto the target in any order.
   </Step>
 
   <Step title="Change">
-    Change refers to the constant "changes" that take place in the source database. Typically this means Inserts, Updates and Deletes. Note that this happens "forever"  and Wirekite establishes a pipeline from the source to the target so that target is kept up to date to the source. Note that this is usually a single threaded process since transactions that COMMIT on the source need to COMMIT on the target in the exact same order.
+    Change refers to the constant "changes" that take place in the source database. Typically this means Inserts, Updates and Deletes. Note that this happens "forever"  and Wirekite establishes a pipeline from the source to the target so that the target is kept up-to-date with the source. Note that this is usually a single threaded process since transactions that COMMIT on the source need to COMMIT on the target in the exact same order.
   </Step>
 </Steps>
 
@@ -35,14 +35,14 @@ Wirekite has three components which are essentially the actions that are taken o
 
 <Steps>
   <Step title="Extractor">
-    This is the component that extracts schema, data and change from the source database. Extractors are only aware of sources and are completely agnostic to downstream target. Thus this component "reads" from the source database to "writes" to intermediate storage.
+    Extractors are the components that extract schema, data and change from the source database. Extractors are only aware of sources and are completely agnostic to details of the downstream target. This component "reads" from the source database to "writes" to intermediate storage.
   </Step>
 
   <Step title="Mover">
-    This is the component that does the moving of the files from the source database to the target. Note that Mover is completely agnostic to the contents of the files and do not read or write them, but just moves the files from one storage location to another.
+    This is the component that does the moving of the files from the source database to an environment where it can be accessed by the target. Movers are agnostic to the contents of files, although Wirekite has different movers for simple file transfer, Amazon Web Services S3 uploads, and a few vendor-specific "data staging" environments. Movers regard the files as byte-streams and make no attempt to parse their contents.
   </Step>
 
   <Step title="Loader">
-    This is the component that reads the files which are moved by the Mover and "loads" them to the target database instances. Loaders work on schema, data and change files. Loaders read the files and translate them to corresponding database language statements and execute those statements on the database.
+    This is the component that reads the files that are moved by the Mover and "loads" them to the target database instances. Loaders work on schema, data and change files. Schema and change loaders read the files and translate them to corresponding database language statements and execute those statements on the database, while data loaders may directly load data or may use database-native facilities like COPY or LOAD DATA INFILE to quickly load data, depending on the capabilities of the target database.
   </Step>
 </Steps>
