@@ -1,11 +1,11 @@
 ---
-title: "MySQL"
-description: "This guide talks about what do you need to do to configure MySQL to use Wirekite."
+title: "MySQL and MariaDB"
+description: "This guide talks about what do you need to do to configure MySQL or Mariadb to use Wirekite."
 ---
 
 ## Extractor Prerequisites
 
-To configure MySQL as an extractor you must have the following prereqs met.
+To configure MySQL or MariaDB as an extractor you must have the following prereqs met.  Below references to MySQL also apply to MariaDB setups.
 
  1. Make sure that the database version is `5.x` and above.
  2. Make sure the tables being extracted are InnoDB tables.
@@ -13,7 +13,7 @@ To configure MySQL as an extractor you must have the following prereqs met.
  4. Also make sure that `binlog_row_image` is set to appropriate value. Wirekite does not mandate any particular value, as long as the data that you are trying to extract is logged.
  5. Make sure that you configure a user for wirekite with full privileges on the tables that we are extracting. It is strongly preferred to create a separate user for wirekite.
  6. Wirekite will also create some internal tables(wirekite_progress and wirekite_action). Make sure wirekite user has read and write privileges to those tables.
- 7. Make sure that MySQL has privileges to write to the directory where the wirekite output files will be generated. This can be configured by setting appropriate value for `secure_file_priv`.
+ 7. Make sure that MySQL has privileges to write to the directory where the Wirekite output files will be generated. This can be configured by setting an appropriate value for `secure_file_priv`.
  8. Also make sure `group_concat_max_len = 50000`
  9. When doing a data extract make sure that replication is stopped. This is to make sure that the dump is consistent to given mysql coordinate position.
 10. It is highly preferable to run wirekite on a slave of production database, since wirekite can generate lot of load on the database server.
