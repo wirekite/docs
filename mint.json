@@ -70,7 +70,8 @@
         "sourceguides/mysql",
         "sourceguides/postgres",
         "sourceguides/oracle",
-        "sourceguides/sqlserver"
+        "sourceguides/sqlserver",
+        "sourceguides/simplemover"
       ]
     },
     {
