@@ -1,5 +1,28 @@
 ---
-title: 'New file'
-description: 'Description of your new file.'
+title: "Wirekite File Data Mover"
+description: "Securely moves files to target environments."
 ---
 
+The Wirekite File Data Mover transfers files extracted by Wirekite Extractors to target environments.  It only needs to run if the source environment and target environment are on different hosts and don't have visibility to the filesystem where the Wirekite Extractors wrote their files.
+
+It uses [ssh protocol](https://www.ssh.com/academy/ssh/protocol) to copy files from source to target, so as long as you can "ssh" from the source host to the target host, the Wirekite File Mover should work.
+
+Note that Wirekite supports other types of movers: an AWS File Data Mover, used with Firebolt and other targets that access AWS S3 buckets, and a "PUT" File Data Mover for Snowflake.  These movers should be used for these targets and should be run on hosts that have visibility to the target environments.
+
+## Configuration parameters for the File Data Mover
+
+<ResponseField name="dataDirectory" type="string" required>
+  dataDirectory is where the Wirekite Data Extractor wrote its files.
+</ResponseField>
+<ResponseField name="logFile" type="string" required>
+  logFile is where the Wirekite Data Mover will write its logging output.
+</ResponseField>
+<ResponseField name="maxThreads" type="integer">
+  maxThreads is the maximum number of parallel threads used to upload data to the bucket.  The default is 10.
+</ResponseField>
+<ResponseField name="scpTarget" type="integer">
+  scpTarget is remote-user@target-host:/path/to/datadir.  Files moved by the File Data Mover will be written in /path/to/datadir.  This should be the same path used by the Data Loader.
+</ResponseField>
+<ResponseField name="removeFiles" type="boolean">
+  removeFiles specifies whether the Data Mover will remove files from the dataDirectory once it has safely copied them.  The default is true.  This may be set to false while troubleshooting, but should not normally be set as these files can take a lot of storage space.
+</ResponseField>
