@@ -12,10 +12,10 @@ Note that Wirekite supports other types of movers: an AWS File Data Mover, used 
 ## Configuration parameters for the File Data Mover
 
 <ResponseField name="dataDirectory" type="string" required>
-  dataDirectory is where the Wirekite Data Extractor wrote its files.
+  dataDirectory is the full path visible on the local machine where the Wirekite Data Extractor wrote its files.
 </ResponseField>
 <ResponseField name="logFile" type="string" required>
-  logFile is where the Wirekite Data Mover will write its logging output.
+  logFile is the path to a filename on the local machine where the Wirekite Data Mover will write its logging output.
 </ResponseField>
 <ResponseField name="scpTarget" type="string" required>
   scpTarget is remote-user@target-host:/path/to/datadir.  Files moved by the File Data Mover will be written in /path/to/datadir.  This should be the same path used by the Data Loader.
