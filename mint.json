@@ -77,6 +77,8 @@
       "group": "Target Guides",
       "pages": [
         "targetguides/snowflake",
+        "targetguides/mysqltarget",
+        "targetguides/postgrestarget",
         "targetguides/firebolt"
       ]
     },
