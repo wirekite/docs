@@ -1,4 +1,4 @@
----
+ing ---
 title: "PostgreSQL"
 description: "This guide talks about what do you need to do to configure Postgres to use Wirekite."
 ---
@@ -17,6 +17,7 @@ To configure Postgres as an extractor you must have the following prereqs met.
  8. When doing a Data extract make sure that replication is stopped and the database instance being dumped from is quiescent. This is to make sure that the entire dump is consistent to a specific position.
  9. After doing a Data Extract, but before re-enabling replication, you should create a REPLICATION SLOT for the Change Extractor.
 10. It is highly preferable to run wirekite on a \*\*replica \*\*of a production-facing database instance, since wirekite can generate load on the database server, particularly as the instance needs to be quiesced during Data extraction as mentioned above.
+11. When doing the initial data extract using the Data Extractor from a cloud-managed or operationally remote PostgreSQL instance - in other words, anything with a host that isn't "localhost" - the loadLocal=true option is required.
 
 ## Schema Extractor
 
@@ -100,6 +101,10 @@ database3.table3
 
 <ResponseField name="hexEncoding" type="boolean" default="false">
   hexEncoding is used to specify whether string data will be extracted as hex.  The default is base64.  hexEncoding should only be used if you're loading to a target that doesn't handle base64, such as Snowflake.
+</ResponseField>
+
+<ResponseField name="loadLocal" type="boolean" default="false">
+  loadLocal is used to specify whether the database instance will directly write extraction files itself or will write to files on filesystems that may be only visible to the client.  **loadLocal=true is required for cloud-managed extracts.**
 </ResponseField>
 
 ## Change Extractor
