@@ -15,8 +15,9 @@ To configure MySQL or MariaDB as an extractor you must have the following prereq
  6. Wirekite will also create some internal tables(wirekite_progress and wirekite_action). Make sure wirekite user has read and write privileges to those tables.
  7. Make sure that MySQL has privileges to write to the directory where the Wirekite output files will be generated. This can be configured by setting an appropriate value for `secure_file_priv`.
  8. Also make sure `group_concat_max_len = 50000`
- 9. When doing a data extract make sure that replication is stopped. This is to make sure that the dump is consistent to given mysql coordinate position.
+ 9. When doing an initial data extract make sure that replication is stopped. This is to make sure that the dump is consistent to given mysql coordinate position.
 10. It is highly preferable to run wirekite on a slave of production database, since wirekite can generate lot of load on the database server.
+11. If you're extracting from a cloud-managed or remote instance that can't dump to a filesystem you can access, be sure to use the loadLocal=true config option below.
 
 ## Schema Extractor
 
@@ -98,6 +99,10 @@ database3.table3
 
 <ResponseField name="hexEncoding" type="boolean" default="false">
   Whether to extract string data as hex or base 64.
+</ResponseField>
+
+<ResponseField name="loadLocal" type="boolean" default="false">
+  Whether to use the "local" dump option for MySQL, which means the dump will be done to files visible on the client host, no matter where the database instance itself is running.  **loadLocal=true is necessary for cloud-managed MySQL sources.**
 </ResponseField>
 
 ## Change Extractor
